@@ -1,5 +1,5 @@
 name: "🧪 QA"
-description: "리팩토링"
+description: "사용성 테스트"
 labels: ["qa"]
 body:
   - type: textarea
