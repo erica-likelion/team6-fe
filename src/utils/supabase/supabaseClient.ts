@@ -14,7 +14,6 @@ const supabaseConfig: SupabaseConfig = {
   supabaseKey: import.meta.env.VITE_SUPABASE_PUBLIC_ANON_KEY,
 };
 
-console.log(supabaseConfig.supabaseUrl)
 const supabase = createClient(supabaseConfig.supabaseUrl, supabaseConfig.supabaseKey, supabaseConfig.option);
 
 export default supabase;
