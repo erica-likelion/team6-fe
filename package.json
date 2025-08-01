@@ -53,9 +53,9 @@
     "typescript": "5.8.3"
   },
   "lint-staged": {
-    "*.{tx, tsx}": [
-      "eslint",
-      "prettier --list-different"
+    "src/**/*.{tx,tsx,js,jsx}": [
+      "eslint --fix",
+      "prettier --config ./.prettierrc --write -u"
     ]
   }
 }
