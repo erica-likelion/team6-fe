@@ -11,4 +11,11 @@
         padding-bottom: env(safe-area-inset-bottom) !important;
         padding-left: env(safe-area-inset-left) !important;
     }
+    div, span {
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+    }
+    
 }
