@@ -18,7 +18,7 @@ export default defineConfig({
         name: 'team6-fe',
         short_name: 'team6-fe',
         description: 'team6-fe',
-        theme_color: '#ffffff',
+        theme_color: '#F7F6F1',
 
         icons: [
           {
