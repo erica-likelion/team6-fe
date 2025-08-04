@@ -1,80 +1,80 @@
 @layer components {
     /* Header */
     .header-large {
-      @apply text-black font-bold text-[2rem] leading-[2.5rem] tracking-[-0.04rem];
+      @apply font-suit text-black font-bold text-[2rem] leading-[2.5rem] tracking-[-0.04rem];
     }
   
     .header-medium {
-      @apply text-black font-bold text-[1.75rem] leading-[2.25rem] tracking-[-0.035rem];
+      @apply font-suit text-black font-bold text-[1.75rem] leading-[2.25rem] tracking-[-0.035rem];
     }
   
     .header-small {
-      @apply text-black font-bold text-[1.5rem] leading-[2rem] tracking-[-0.03rem];
+      @apply font-suit text-black font-bold text-[1.5rem] leading-[2rem] tracking-[-0.03rem];
     }
   
     .header-xsmall {
-      @apply text-black font-bold text-[1.25rem] leading-[1.75rem] tracking-[-0.025rem];
+      @apply font-suit text-black font-bold text-[1.25rem] leading-[1.75rem] tracking-[-0.025rem];
     }
   
     /* Label */
     .label-large {
-      @apply text-black text-[1.125rem] leading-[1.5rem] tracking-[-0.0225rem];
+      @apply font-suit text-black text-[1.125rem] leading-[1.5rem] tracking-[-0.0225rem];
     }
   
     .label-large-600 {
-      @apply text-black text-[1.125rem] leading-[1.5rem] tracking-[-0.0225rem] font-semibold;
+      @apply font-suit text-black text-[1.125rem] leading-[1.5rem] tracking-[-0.0225rem] font-semibold;
     }
   
     .label-large-500 {
-      @apply text-black text-[1.125rem] leading-[1.5rem] tracking-[-0.0225rem] font-medium;
+      @apply font-suit text-black text-[1.125rem] leading-[1.5rem] tracking-[-0.0225rem] font-medium;
     }
   
     .label-medium {
-      @apply text-black text-[1rem] leading-[1.25rem] tracking-[-0.02rem];
+      @apply font-suit text-black text-[1rem] leading-[1.25rem] tracking-[-0.02rem];
     }
   
     .label-medium-600 {
-      @apply text-black text-[1rem] leading-[1.25rem] tracking-[-0.02rem] font-semibold;
+      @apply font-suit text-black text-[1rem] leading-[1.25rem] tracking-[-0.02rem] font-semibold;
     }
   
     .label-medium-500 {
-      @apply text-black text-[1rem] leading-[1.25rem] tracking-[-0.02rem] font-medium;
+      @apply font-suit text-black text-[1rem] leading-[1.25rem] tracking-[-0.02rem] font-medium;
     }
   
     .label-small {
-      @apply text-black text-[0.875rem] leading-[1rem] tracking-[-0.0175rem];
+      @apply font-suit text-black text-[0.875rem] leading-[1rem] tracking-[-0.0175rem];
     }
   
     .label-small-600 {
-      @apply text-black text-[0.875rem] leading-[1rem] tracking-[-0.0175rem] font-semibold;
+      @apply font-suit text-black text-[0.875rem] leading-[1rem] tracking-[-0.0175rem] font-semibold;
     }
   
     .label-small-500 {
-      @apply text-black text-[0.875rem] leading-[1rem] tracking-[-0.0175rem] font-medium;
+      @apply font-suit text-black text-[0.875rem] leading-[1rem] tracking-[-0.0175rem] font-medium;
     }
   
     .label-xsmall {
-      @apply text-black text-[0.75rem] leading-[1rem] tracking-[-0.015rem];
+      @apply font-suit text-black text-[0.75rem] leading-[1rem] tracking-[-0.015rem];
     }
   
     .label-xsmall-600 {
-      @apply text-black text-[0.75rem] leading-[1rem] tracking-[-0.015rem] font-semibold;
+      @apply font-suit text-black text-[0.75rem] leading-[1rem] tracking-[-0.015rem] font-semibold;
     }
   
     .label-xsmall-500 {
-      @apply text-black text-[0.75rem] leading-[1rem] tracking-[-0.015rem] font-medium;
+      @apply font-suit text-black text-[0.75rem] leading-[1rem] tracking-[-0.015rem] font-medium;
     }
   
     /* Paragraph */
     .paragraph-large {
-      @apply text-black font-regular text-[1.125rem] leading-[1.75rem] tracking-[-0.0225rem];
+      @apply font-suit text-black font-regular text-[1.125rem] leading-[1.75rem] tracking-[-0.0225rem];
     }
   
     .paragraph-medium {
-      @apply text-black font-regular text-[1rem] leading-[1.5rem] tracking-[-0.02rem];
+      @apply font-suit text-black font-regular text-[1rem] leading-[1.5rem] tracking-[-0.02rem];
     }
   
     .paragraph-small {
-      @apply text-black font-regular text-[0.875rem] leading-[1.25rem] tracking-[-0.0175rem];
+      @apply font-suit text-black font-regular text-[0.875rem] leading-[1.25rem] tracking-[-0.0175rem];
     }
   }

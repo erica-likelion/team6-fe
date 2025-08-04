@@ -24,4 +24,39 @@
     --font-weight-semibold: 600;
     --font-weight-medium: 500;
     --font-weight-regular: 400;
+
+    /* font-family */
+    --font-suit: "SUIT";
+}
+
+@font-face {
+    font-family: SUIT;
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url("/fonts/SUIT-Bold.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: SUIT;
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url("/fonts/SUIT-SemiBold.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: SUIT;
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url("/fonts/SUIT-Medium.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: SUIT;
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("/fonts/SUIT-Regular.woff2") format("woff2");
 }
