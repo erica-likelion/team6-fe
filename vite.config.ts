@@ -19,6 +19,8 @@ export default defineConfig({
         short_name: 'team6-fe',
         description: 'team6-fe',
         theme_color: '#F7F6F1',
+        display: 'standalone', // 주소줄 제거
+        orientation: 'portrait', // 세로 고정
 
         icons: [
           {
