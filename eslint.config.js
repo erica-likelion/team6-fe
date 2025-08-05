@@ -8,6 +8,8 @@ import unusedImports from 'eslint-plugin-unused-imports';
 import eslintConfigPrettier from 'eslint-config-prettier/flat';
 import importPlugin from 'eslint-plugin-import';
 import reactPlugin from 'eslint-plugin-react';
+import pluginRouter from '@tanstack/eslint-plugin-router';
+import path from 'path';
 
 export default tseslint.config(
   { ignores: ['dist'] },
@@ -19,6 +21,7 @@ export default tseslint.config(
       importPlugin.flatConfigs.recommended, // import export 관련 플러그인
       reactPlugin.configs.flat.recommended, // react 관련 플러그인
       reactPlugin.configs.flat['jsx-runtime'], // React 17 +
+      ...pluginRouter.configs['flat/recommended'], // tanstack/router 플러그인
     ],
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
