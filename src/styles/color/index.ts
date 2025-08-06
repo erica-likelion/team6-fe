@@ -19,3 +19,10 @@ export const primaryColorMap = {
 export const blackColorMap = { black: '#161616' };
 
 export const whiteColorMap = { white: '#ffffff' };
+
+export const colorMap = {
+  ...grayColorMap,
+  ...primaryColorMap,
+  ...whiteColorMap,
+  ...blackColorMap,
+};
