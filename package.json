@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "generate-pwa-icons": "pwa-assets-generator",
     "prepare": "husky",
-    "postinstall": "husky"
+    "postinstall": "husky",
+    "icon-type": "ts-node src/scripts/icon-types.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.53.0",
@@ -50,6 +51,7 @@
     "typescript-eslint": "^8.20.0",
     "vite": "^6.0.11",
     "vite-plugin-pwa": "^0.21.1",
+    "vite-plugin-svgr": "^4.3.0",
     "vite-tsconfig-paths": "^5.1.4",
     "workbox-core": "^7.3.0",
     "workbox-window": "^7.3.0"
