@@ -14,6 +14,7 @@ import { Route as UserIndexRouteImport } from './routes/user/index'
 import { Route as ListIndexRouteImport } from './routes/list/index'
 import { Route as HomeIndexRouteImport } from './routes/home/index'
 import { Route as ChatIndexRouteImport } from './routes/chat/index'
+import { Route as ChatIdRouteImport } from './routes/chat/$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -40,9 +41,15 @@ const ChatIndexRoute = ChatIndexRouteImport.update({
   path: '/chat/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ChatIdRoute = ChatIdRouteImport.update({
+  id: '/chat/$id',
+  path: '/chat/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/chat/$id': typeof ChatIdRoute
   '/chat': typeof ChatIndexRoute
   '/home': typeof HomeIndexRoute
   '/list': typeof ListIndexRoute
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/chat/$id': typeof ChatIdRoute
   '/chat': typeof ChatIndexRoute
   '/home': typeof HomeIndexRoute
   '/list': typeof ListIndexRoute
@@ -58,6 +66,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/chat/$id': typeof ChatIdRoute
   '/chat/': typeof ChatIndexRoute
   '/home/': typeof HomeIndexRoute
   '/list/': typeof ListIndexRoute
@@ -65,14 +74,15 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/chat' | '/home' | '/list' | '/user'
+  fullPaths: '/' | '/chat/$id' | '/chat' | '/home' | '/list' | '/user'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/chat' | '/home' | '/list' | '/user'
-  id: '__root__' | '/' | '/chat/' | '/home/' | '/list/' | '/user/'
+  to: '/' | '/chat/$id' | '/chat' | '/home' | '/list' | '/user'
+  id: '__root__' | '/' | '/chat/$id' | '/chat/' | '/home/' | '/list/' | '/user/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ChatIdRoute: typeof ChatIdRoute
   ChatIndexRoute: typeof ChatIndexRoute
   HomeIndexRoute: typeof HomeIndexRoute
   ListIndexRoute: typeof ListIndexRoute
@@ -116,11 +126,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ChatIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/chat/$id': {
+      id: '/chat/$id'
+      path: '/chat/$id'
+      fullPath: '/chat/$id'
+      preLoaderRoute: typeof ChatIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ChatIdRoute: ChatIdRoute,
   ChatIndexRoute: ChatIndexRoute,
   HomeIndexRoute: HomeIndexRoute,
   ListIndexRoute: ListIndexRoute,
