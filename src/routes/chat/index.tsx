@@ -1,5 +1,5 @@
-import { ChatList } from '@features/chat/components/ChatList';
-import { TopNavigation } from '@features/chat/components/TopNavigation';
+import { List } from '@features/chat/components/List';
+import { Navigation } from '@features/chat/components/Navigation';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/chat/')({
@@ -9,8 +9,8 @@ export const Route = createFileRoute('/chat/')({
 function Chat() {
   return (
     <>
-      <TopNavigation />
-      <ChatList />
+      <Navigation />
+      <List />
     </>
   );
 }

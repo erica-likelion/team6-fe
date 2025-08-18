@@ -1,14 +1,14 @@
-export const ChatList = () => {
+export const List = () => {
   const USER_CHAT = true;
 
   return (
     <ul className="flex flex-1 flex-col items-stretch gap-[1.5rem] overflow-auto px-[1rem] py-[1.25rem]">
-      {USER_CHAT ? <ChatListItem /> : <EmptyChatListItem />}
+      {USER_CHAT ? <ListItem /> : <EmptyListItem />}
     </ul>
   );
 };
 
-const ChatListItem = () => {
+const ListItem = () => {
   return (
     <li className="flex items-center gap-[0.625rem]">
       <div className="h-[4rem] w-[4rem] rounded-[0.625rem] bg-gray-100"></div>
@@ -26,7 +26,7 @@ const ChatListItem = () => {
   );
 };
 
-const EmptyChatListItem = () => {
+const EmptyListItem = () => {
   return (
     <>
       <div className="h-[10rem] w-[10rem] bg-gray-200"></div>
