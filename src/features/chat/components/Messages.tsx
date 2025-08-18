@@ -3,7 +3,7 @@ import { Banners } from '@features/chat/components/Banners';
 
 export const Messages = () => {
   return (
-    <div className="flex flex-1 flex-col gap-[1.5rem]">
+    <div className="flex flex-1 flex-col gap-[1.5rem] px-[1rem]">
       <Message senderType="other" />
       <Message senderType="me" />
       <Message senderType="other" />
@@ -19,7 +19,7 @@ interface MessageProps {
 const Message = ({ senderType }: MessageProps) => {
   const isMine = senderType === 'me';
   return (
-    <div className={`flex gap-[0.5rem] px-[1rem] ${isMine && 'justify-end'}`}>
+    <div className={`flex gap-[0.5rem] ${isMine && 'justify-end'}`}>
       {!isMine && (
         <div className="flex h-[2.25rem] w-[2.25rem] shrink-0 items-center justify-center rounded-[1.125rem] border-1 border-gray-300 bg-gray-200">
           <Icon icon="user_fill" className="text-white" width={16} height={16} />
