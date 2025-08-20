@@ -71,3 +71,4 @@ export function SelectionButton({
     </button>
   );
 }
+export default SelectionButton;
