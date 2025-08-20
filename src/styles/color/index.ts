@@ -14,6 +14,7 @@ export const grayColorMap = {
 export const primaryColorMap = {
   'primary-green': '#4DDB6D',
   'primary-bg': '#F7F6F1',
+  'empahsis-green': '#1EB065'
 };
 
 export const blackColorMap = { black: '#161616' };
