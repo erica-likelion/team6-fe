@@ -3,11 +3,16 @@ import { Banners } from '@features/chat/components/Banners';
 
 export const Messages = () => {
   return (
-    <div className="flex flex-1 flex-col gap-[1.5rem] px-[1rem]">
+    <div className="flex h-dvh flex-1 flex-col gap-[1.5rem] overflow-y-scroll px-[1rem] pt-[3.25rem] pb-[4.25rem]">
       <Message senderType="other" />
       <Message senderType="me" />
       <Message senderType="other" />
       <Banners.Promise />
+      <Banners.Addjustment />
+      <Banners.Receipt />
+      <Banners.Send />
+      <Banners.Check />
+      <Banners.Review />
     </div>
   );
 };
