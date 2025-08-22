@@ -13,7 +13,6 @@ export const grayColorMap = {
 
 export const ColorMap = {
   red: '#FF5145',
-  'emphasis-green': '#1EB065',
   'primary-green': '#4DDB6D',
   'secondary-green': '#B5EAA7',
   'tertiary-green': '#E4F1DB',
