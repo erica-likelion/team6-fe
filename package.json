@@ -20,6 +20,7 @@
     "@tanstack/react-router-devtools": "^1.130.13",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-modal-sheet": "^4.4.0",
     "tailwindcss": "^4.1.11"
   },
   "devDependencies": {
