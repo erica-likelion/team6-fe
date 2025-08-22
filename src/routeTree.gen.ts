@@ -14,6 +14,8 @@ import { Route as UserIndexRouteImport } from './routes/user/index'
 import { Route as ListIndexRouteImport } from './routes/list/index'
 import { Route as HomeIndexRouteImport } from './routes/home/index'
 import { Route as ChatIndexRouteImport } from './routes/chat/index'
+import { Route as ChatIdIndexRouteImport } from './routes/chat/$id/index'
+import { Route as ChatIdSettlementIndexRouteImport } from './routes/chat/$id/settlement/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -40,6 +42,16 @@ const ChatIndexRoute = ChatIndexRouteImport.update({
   path: '/chat/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ChatIdIndexRoute = ChatIdIndexRouteImport.update({
+  id: '/chat/$id/',
+  path: '/chat/$id/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChatIdSettlementIndexRoute = ChatIdSettlementIndexRouteImport.update({
+  id: '/chat/$id/settlement/',
+  path: '/chat/$id/settlement/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -47,6 +59,8 @@ export interface FileRoutesByFullPath {
   '/home': typeof HomeIndexRoute
   '/list': typeof ListIndexRoute
   '/user': typeof UserIndexRoute
+  '/chat/$id': typeof ChatIdIndexRoute
+  '/chat/$id/settlement': typeof ChatIdSettlementIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,6 +68,8 @@ export interface FileRoutesByTo {
   '/home': typeof HomeIndexRoute
   '/list': typeof ListIndexRoute
   '/user': typeof UserIndexRoute
+  '/chat/$id': typeof ChatIdIndexRoute
+  '/chat/$id/settlement': typeof ChatIdSettlementIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -62,13 +78,37 @@ export interface FileRoutesById {
   '/home/': typeof HomeIndexRoute
   '/list/': typeof ListIndexRoute
   '/user/': typeof UserIndexRoute
+  '/chat/$id/': typeof ChatIdIndexRoute
+  '/chat/$id/settlement/': typeof ChatIdSettlementIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/chat' | '/home' | '/list' | '/user'
+  fullPaths:
+    | '/'
+    | '/chat'
+    | '/home'
+    | '/list'
+    | '/user'
+    | '/chat/$id'
+    | '/chat/$id/settlement'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/chat' | '/home' | '/list' | '/user'
-  id: '__root__' | '/' | '/chat/' | '/home/' | '/list/' | '/user/'
+  to:
+    | '/'
+    | '/chat'
+    | '/home'
+    | '/list'
+    | '/user'
+    | '/chat/$id'
+    | '/chat/$id/settlement'
+  id:
+    | '__root__'
+    | '/'
+    | '/chat/'
+    | '/home/'
+    | '/list/'
+    | '/user/'
+    | '/chat/$id/'
+    | '/chat/$id/settlement/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -77,6 +117,8 @@ export interface RootRouteChildren {
   HomeIndexRoute: typeof HomeIndexRoute
   ListIndexRoute: typeof ListIndexRoute
   UserIndexRoute: typeof UserIndexRoute
+  ChatIdIndexRoute: typeof ChatIdIndexRoute
+  ChatIdSettlementIndexRoute: typeof ChatIdSettlementIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -116,6 +158,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ChatIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/chat/$id/': {
+      id: '/chat/$id/'
+      path: '/chat/$id'
+      fullPath: '/chat/$id'
+      preLoaderRoute: typeof ChatIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/chat/$id/settlement/': {
+      id: '/chat/$id/settlement/'
+      path: '/chat/$id/settlement'
+      fullPath: '/chat/$id/settlement'
+      preLoaderRoute: typeof ChatIdSettlementIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -125,6 +181,8 @@ const rootRouteChildren: RootRouteChildren = {
   HomeIndexRoute: HomeIndexRoute,
   ListIndexRoute: ListIndexRoute,
   UserIndexRoute: UserIndexRoute,
+  ChatIdIndexRoute: ChatIdIndexRoute,
+  ChatIdSettlementIndexRoute: ChatIdSettlementIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

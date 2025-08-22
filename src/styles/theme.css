@@ -15,8 +15,12 @@
     --color-gray-100: #EDECE7;
     --color-gray-50: #F7F6F1;
 
-    /* primary color */
+    /* color */
+    --color-red: #FF5145;
+    --color-empahsis-green: #1EB065;
     --color-primary-green: #4DDB6D;
+    --color-secondary-green: #B5EAA7;
+    --color-tertiary-green: #E4F1DB;
     --color-primary-bg: #F7F6F1;
 
     /* font-weight */
