@@ -18,6 +18,7 @@ export const ColorMap = {
   'secondary-green': '#B5EAA7',
   'tertiary-green': '#E4F1DB',
   'primary-bg': '#F7F6F1',
+  'empahsis-green': '#1EB065'
 };
 
 export const blackColorMap = { black: '#161616' };
