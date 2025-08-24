@@ -11,8 +11,10 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as UserIndexRouteImport } from './routes/user/index'
+import { Route as MartIndexRouteImport } from './routes/mart/index'
 import { Route as ListIndexRouteImport } from './routes/list/index'
 import { Route as HomeIndexRouteImport } from './routes/home/index'
+import { Route as DivisionIndexRouteImport } from './routes/division/index'
 import { Route as ChatIndexRouteImport } from './routes/chat/index'
 
 const IndexRoute = IndexRouteImport.update({
@@ -25,6 +27,11 @@ const UserIndexRoute = UserIndexRouteImport.update({
   path: '/user/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MartIndexRoute = MartIndexRouteImport.update({
+  id: '/mart/',
+  path: '/mart/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ListIndexRoute = ListIndexRouteImport.update({
   id: '/list/',
   path: '/list/',
@@ -33,6 +40,11 @@ const ListIndexRoute = ListIndexRouteImport.update({
 const HomeIndexRoute = HomeIndexRouteImport.update({
   id: '/home/',
   path: '/home/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DivisionIndexRoute = DivisionIndexRouteImport.update({
+  id: '/division/',
+  path: '/division/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ChatIndexRoute = ChatIndexRouteImport.update({
@@ -44,38 +56,54 @@ const ChatIndexRoute = ChatIndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/chat': typeof ChatIndexRoute
+  '/division': typeof DivisionIndexRoute
   '/home': typeof HomeIndexRoute
   '/list': typeof ListIndexRoute
+  '/mart': typeof MartIndexRoute
   '/user': typeof UserIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/chat': typeof ChatIndexRoute
+  '/division': typeof DivisionIndexRoute
   '/home': typeof HomeIndexRoute
   '/list': typeof ListIndexRoute
+  '/mart': typeof MartIndexRoute
   '/user': typeof UserIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/chat/': typeof ChatIndexRoute
+  '/division/': typeof DivisionIndexRoute
   '/home/': typeof HomeIndexRoute
   '/list/': typeof ListIndexRoute
+  '/mart/': typeof MartIndexRoute
   '/user/': typeof UserIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/chat' | '/home' | '/list' | '/user'
+  fullPaths: '/' | '/chat' | '/division' | '/home' | '/list' | '/mart' | '/user'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/chat' | '/home' | '/list' | '/user'
-  id: '__root__' | '/' | '/chat/' | '/home/' | '/list/' | '/user/'
+  to: '/' | '/chat' | '/division' | '/home' | '/list' | '/mart' | '/user'
+  id:
+    | '__root__'
+    | '/'
+    | '/chat/'
+    | '/division/'
+    | '/home/'
+    | '/list/'
+    | '/mart/'
+    | '/user/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ChatIndexRoute: typeof ChatIndexRoute
+  DivisionIndexRoute: typeof DivisionIndexRoute
   HomeIndexRoute: typeof HomeIndexRoute
   ListIndexRoute: typeof ListIndexRoute
+  MartIndexRoute: typeof MartIndexRoute
   UserIndexRoute: typeof UserIndexRoute
 }
 
@@ -95,6 +123,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UserIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mart/': {
+      id: '/mart/'
+      path: '/mart'
+      fullPath: '/mart'
+      preLoaderRoute: typeof MartIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/list/': {
       id: '/list/'
       path: '/list'
@@ -107,6 +142,13 @@ declare module '@tanstack/react-router' {
       path: '/home'
       fullPath: '/home'
       preLoaderRoute: typeof HomeIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/division/': {
+      id: '/division/'
+      path: '/division'
+      fullPath: '/division'
+      preLoaderRoute: typeof DivisionIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/chat/': {
@@ -122,8 +164,10 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ChatIndexRoute: ChatIndexRoute,
+  DivisionIndexRoute: DivisionIndexRoute,
   HomeIndexRoute: HomeIndexRoute,
   ListIndexRoute: ListIndexRoute,
+  MartIndexRoute: MartIndexRoute,
   UserIndexRoute: UserIndexRoute,
 }
 export const routeTree = rootRouteImport
