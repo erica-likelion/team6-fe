@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as UserIndexRouteImport } from './routes/user/index'
+import { Route as PostIndexRouteImport } from './routes/post/index'
 import { Route as ListIndexRouteImport } from './routes/list/index'
 import { Route as HomeIndexRouteImport } from './routes/home/index'
 import { Route as ChatIndexRouteImport } from './routes/chat/index'
@@ -25,6 +26,11 @@ const IndexRoute = IndexRouteImport.update({
 const UserIndexRoute = UserIndexRouteImport.update({
   id: '/user/',
   path: '/user/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PostIndexRoute = PostIndexRouteImport.update({
+  id: '/post/',
+  path: '/post/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ListIndexRoute = ListIndexRouteImport.update({
@@ -58,6 +64,7 @@ export interface FileRoutesByFullPath {
   '/chat': typeof ChatIndexRoute
   '/home': typeof HomeIndexRoute
   '/list': typeof ListIndexRoute
+  '/post': typeof PostIndexRoute
   '/user': typeof UserIndexRoute
   '/chat/$id': typeof ChatIdIndexRoute
   '/chat/$id/settlement': typeof ChatIdSettlementIndexRoute
@@ -67,6 +74,7 @@ export interface FileRoutesByTo {
   '/chat': typeof ChatIndexRoute
   '/home': typeof HomeIndexRoute
   '/list': typeof ListIndexRoute
+  '/post': typeof PostIndexRoute
   '/user': typeof UserIndexRoute
   '/chat/$id': typeof ChatIdIndexRoute
   '/chat/$id/settlement': typeof ChatIdSettlementIndexRoute
@@ -77,6 +85,7 @@ export interface FileRoutesById {
   '/chat/': typeof ChatIndexRoute
   '/home/': typeof HomeIndexRoute
   '/list/': typeof ListIndexRoute
+  '/post/': typeof PostIndexRoute
   '/user/': typeof UserIndexRoute
   '/chat/$id/': typeof ChatIdIndexRoute
   '/chat/$id/settlement/': typeof ChatIdSettlementIndexRoute
@@ -88,6 +97,7 @@ export interface FileRouteTypes {
     | '/chat'
     | '/home'
     | '/list'
+    | '/post'
     | '/user'
     | '/chat/$id'
     | '/chat/$id/settlement'
@@ -97,6 +107,7 @@ export interface FileRouteTypes {
     | '/chat'
     | '/home'
     | '/list'
+    | '/post'
     | '/user'
     | '/chat/$id'
     | '/chat/$id/settlement'
@@ -106,6 +117,7 @@ export interface FileRouteTypes {
     | '/chat/'
     | '/home/'
     | '/list/'
+    | '/post/'
     | '/user/'
     | '/chat/$id/'
     | '/chat/$id/settlement/'
@@ -116,6 +128,7 @@ export interface RootRouteChildren {
   ChatIndexRoute: typeof ChatIndexRoute
   HomeIndexRoute: typeof HomeIndexRoute
   ListIndexRoute: typeof ListIndexRoute
+  PostIndexRoute: typeof PostIndexRoute
   UserIndexRoute: typeof UserIndexRoute
   ChatIdIndexRoute: typeof ChatIdIndexRoute
   ChatIdSettlementIndexRoute: typeof ChatIdSettlementIndexRoute
@@ -135,6 +148,13 @@ declare module '@tanstack/react-router' {
       path: '/user'
       fullPath: '/user'
       preLoaderRoute: typeof UserIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/post/': {
+      id: '/post/'
+      path: '/post'
+      fullPath: '/post'
+      preLoaderRoute: typeof PostIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/list/': {
@@ -180,6 +200,7 @@ const rootRouteChildren: RootRouteChildren = {
   ChatIndexRoute: ChatIndexRoute,
   HomeIndexRoute: HomeIndexRoute,
   ListIndexRoute: ListIndexRoute,
+  PostIndexRoute: PostIndexRoute,
   UserIndexRoute: UserIndexRoute,
   ChatIdIndexRoute: ChatIdIndexRoute,
   ChatIdSettlementIndexRoute: ChatIdSettlementIndexRoute,
