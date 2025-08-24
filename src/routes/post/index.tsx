@@ -1,14 +1,11 @@
-import { Post } from '@features/post/components/Post';
+// routes/post.tsx
+import { Select } from '@features/post/components/Select';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/post/')({
-  component: RouteComponent,
+  component: PostPage,
 });
 
-function RouteComponent() {
-  return (
-    <>
-      <Post />
-    </>
-  );
+function PostPage() {
+  return <Select />;
 }
