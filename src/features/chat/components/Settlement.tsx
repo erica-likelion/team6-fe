@@ -1,5 +1,5 @@
 import { Icon } from '@components/Icon';
-import { Header } from '@features/chat/components/Header';
+import { Header } from '@components/Header/Header';
 import { Reciept } from '@features/chat/components/Reciept';
 
 interface SettlementProps {

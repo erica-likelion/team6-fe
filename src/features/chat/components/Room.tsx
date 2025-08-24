@@ -1,5 +1,5 @@
 import { Input } from '@features/chat/components/Input';
-import { Header } from '@features/chat/components/Header';
+import { Header } from '@components/Header/Header';
 import { Messages } from '@features/chat/components/Messages';
 import { useRef, useEffect, useState } from 'react';
 interface RoomProps {
