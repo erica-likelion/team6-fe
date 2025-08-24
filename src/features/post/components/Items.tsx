@@ -1,5 +1,5 @@
 import { Icon } from '@components/Icon';
-import { useId, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 const ITEMS = [
   '육류',
@@ -24,33 +24,48 @@ const ITEMS = [
   '기타',
 ];
 
-export const Items = () => {
-  const [items, setItems] = useState<(typeof ITEMS)[number][]>([]);
-  const key = useId();
+type FormValues = { itemCodes: string[] };
 
-  const handleClickItem = (value: (typeof ITEMS)[number]) => {
-    setItems((prev) => (prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]));
+export const Items = () => {
+  const { watch, setValue } = useFormContext<FormValues>();
+  const selected = new Set(watch('itemCodes') ?? []);
+
+  const toggle = (value: string) => {
+    const next = new Set(selected);
+    if (next.has(value)) {
+      next.delete(value);
+    } else {
+      next.add(value);
+    }
+    setValue('itemCodes', Array.from(next), { shouldDirty: true, shouldValidate: true });
   };
 
   return (
     <div className="flex flex-col gap-[0.88rem]">
       <span className="label-large font-bold">구매 예정 품목을 알려주세요.</span>
+
       <ul className="flex flex-wrap gap-[0.375rem]">
-        {ITEMS.map((value, index) => {
-          const isChecked = items.includes(value);
+        {ITEMS.map((value) => {
+          const isChecked = selected.has(value);
           return (
-            <li
-              key={key + index}
-              onClick={() => handleClickItem(value)}
-              className={`flex items-center gap-[0.25rem] border-1 px-[1rem] py-[0.5rem] ${isChecked ? 'border-primary-green' : 'border-gray-100'} label-xsmall rounded-[0.625rem] bg-white font-medium ${isChecked ? 'text-gray-800' : 'text-gray-600'}`}
-            >
-              {value}
-              <Icon
-                icon={isChecked ? 'check' : 'plus'}
-                width={'1.125rem'}
-                height={'1.125rem'}
-                className={isChecked ? 'text-primary-green' : 'text-gray-300'}
-              />
+            <li key={value}>
+              <button
+                type="button"
+                onClick={() => toggle(value)}
+                aria-pressed={isChecked}
+                className={[
+                  'label-xsmall inline-flex items-center gap-[0.25rem] rounded-[0.625rem] border bg-white px-[1rem] py-[0.5rem]',
+                  isChecked ? 'border-primary-green text-gray-800' : 'border-gray-100 text-gray-600',
+                ].join(' ')}
+              >
+                {value}
+                <Icon
+                  icon={isChecked ? 'check' : 'plus'}
+                  width="1.125rem"
+                  height="1.125rem"
+                  className={isChecked ? 'text-primary-green' : 'text-gray-300'}
+                />
+              </button>
             </li>
           );
         })}

@@ -1,3 +1,4 @@
+import Login from '@features/auth/components/Login';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/')({
@@ -5,5 +6,9 @@ export const Route = createFileRoute('/')({
 });
 
 function Index() {
-  return <div>Main Page</div>;
+  return (
+    <div>
+      <Login />
+    </div>
+  );
 }
