@@ -16,15 +16,10 @@ export const Nav = memo(function Nav() {
   );
 
   return (
-    <nav className="h-[6.875rem] shrink-0 border-t-1 border-gray-100 p-[1rem] pb-0">
-      <ul className="flex justify-between">
+    <nav className="fixed bottom-0 left-0 z-50 h-[6.875rem] w-full border-t border-gray-100 bg-[#FAF9F4] px-[1rem]">
+      <ul className="flex h-full items-center justify-between">
         {items.map((it) => (
-          <Li
-            key={it.to}
-            {...it}
-            // exact 매칭이 필요하면 ===, 패턴 매칭이 필요하면 startsWith 등으로 변경
-            isActive={pathname === it.to}
-          />
+          <Li key={it.to} {...it} isActive={pathname === it.to} />
         ))}
       </ul>
     </nav>
@@ -34,9 +29,9 @@ export const Nav = memo(function Nav() {
 const Li = memo(function Li({ to, label, defaultIcon, activeIcon, isActive }: LiProps) {
   return (
     <li className="flex h-[3.75rem] w-[3.75rem] flex-col items-center justify-center gap-[0.5rem]">
-      <Link to={to} className="flex w-[100%] flex-col items-center justify-center text-gray-600">
-        <Icon icon={isActive ? activeIcon : defaultIcon} className="fill-amber-200" />
-        <span className="label-small-600 text-gray-600">{label}</span>
+      <Link to={to} className="flex w-full flex-col items-center justify-center text-gray-600">
+        <Icon icon={isActive ? activeIcon : defaultIcon} className="h-6 w-6" />
+        <span className={`label-small-600 ${isActive ? 'text-black' : 'text-gray-600'}`}>{label}</span>
       </Link>
     </li>
   );

@@ -79,4 +79,5 @@ export type iconTypes =
   | 'user'
   | 'user_fill'
   | 'users'
-  | 'users_fill';
+  | 'users_fill'
+  | 'check-line';

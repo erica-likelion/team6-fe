@@ -11,11 +11,10 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as UserIndexRouteImport } from './routes/user/index'
-import { Route as MartIndexRouteImport } from './routes/mart/index'
 import { Route as ListIndexRouteImport } from './routes/list/index'
 import { Route as HomeIndexRouteImport } from './routes/home/index'
-import { Route as DivisionIndexRouteImport } from './routes/division/index'
 import { Route as ChatIndexRouteImport } from './routes/chat/index'
+import { Route as GroupListTypeRouteImport } from './routes/group-list/$type'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -25,11 +24,6 @@ const IndexRoute = IndexRouteImport.update({
 const UserIndexRoute = UserIndexRouteImport.update({
   id: '/user/',
   path: '/user/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MartIndexRoute = MartIndexRouteImport.update({
-  id: '/mart/',
-  path: '/mart/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ListIndexRoute = ListIndexRouteImport.update({
@@ -42,68 +36,63 @@ const HomeIndexRoute = HomeIndexRouteImport.update({
   path: '/home/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DivisionIndexRoute = DivisionIndexRouteImport.update({
-  id: '/division/',
-  path: '/division/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ChatIndexRoute = ChatIndexRouteImport.update({
   id: '/chat/',
   path: '/chat/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GroupListTypeRoute = GroupListTypeRouteImport.update({
+  id: '/group-list/$type',
+  path: '/group-list/$type',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/group-list/$type': typeof GroupListTypeRoute
   '/chat': typeof ChatIndexRoute
-  '/division': typeof DivisionIndexRoute
   '/home': typeof HomeIndexRoute
   '/list': typeof ListIndexRoute
-  '/mart': typeof MartIndexRoute
   '/user': typeof UserIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/group-list/$type': typeof GroupListTypeRoute
   '/chat': typeof ChatIndexRoute
-  '/division': typeof DivisionIndexRoute
   '/home': typeof HomeIndexRoute
   '/list': typeof ListIndexRoute
-  '/mart': typeof MartIndexRoute
   '/user': typeof UserIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/group-list/$type': typeof GroupListTypeRoute
   '/chat/': typeof ChatIndexRoute
-  '/division/': typeof DivisionIndexRoute
   '/home/': typeof HomeIndexRoute
   '/list/': typeof ListIndexRoute
-  '/mart/': typeof MartIndexRoute
   '/user/': typeof UserIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/chat' | '/division' | '/home' | '/list' | '/mart' | '/user'
+  fullPaths: '/' | '/group-list/$type' | '/chat' | '/home' | '/list' | '/user'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/chat' | '/division' | '/home' | '/list' | '/mart' | '/user'
+  to: '/' | '/group-list/$type' | '/chat' | '/home' | '/list' | '/user'
   id:
     | '__root__'
     | '/'
+    | '/group-list/$type'
     | '/chat/'
-    | '/division/'
     | '/home/'
     | '/list/'
-    | '/mart/'
     | '/user/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  GroupListTypeRoute: typeof GroupListTypeRoute
   ChatIndexRoute: typeof ChatIndexRoute
-  DivisionIndexRoute: typeof DivisionIndexRoute
   HomeIndexRoute: typeof HomeIndexRoute
   ListIndexRoute: typeof ListIndexRoute
-  MartIndexRoute: typeof MartIndexRoute
   UserIndexRoute: typeof UserIndexRoute
 }
 
@@ -123,13 +112,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UserIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/mart/': {
-      id: '/mart/'
-      path: '/mart'
-      fullPath: '/mart'
-      preLoaderRoute: typeof MartIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/list/': {
       id: '/list/'
       path: '/list'
@@ -144,13 +126,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HomeIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/division/': {
-      id: '/division/'
-      path: '/division'
-      fullPath: '/division'
-      preLoaderRoute: typeof DivisionIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/chat/': {
       id: '/chat/'
       path: '/chat'
@@ -158,16 +133,22 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ChatIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/group-list/$type': {
+      id: '/group-list/$type'
+      path: '/group-list/$type'
+      fullPath: '/group-list/$type'
+      preLoaderRoute: typeof GroupListTypeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  GroupListTypeRoute: GroupListTypeRoute,
   ChatIndexRoute: ChatIndexRoute,
-  DivisionIndexRoute: DivisionIndexRoute,
   HomeIndexRoute: HomeIndexRoute,
   ListIndexRoute: ListIndexRoute,
-  MartIndexRoute: MartIndexRoute,
   UserIndexRoute: UserIndexRoute,
 }
 export const routeTree = rootRouteImport

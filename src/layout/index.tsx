@@ -3,8 +3,8 @@ import type { LayoutProps } from './type';
 
 export const Layout = ({ children }: LayoutProps) => {
   return (
-    <div className="bg-primary-bg flex h-[100%] flex-col justify-between">
-      <main className="flex min-h-0 flex-1 flex-col">{children}</main>
+    <div className="flex min-h-screen flex-col bg-[#FAF9F4]">
+      <main className="flex flex-1 flex-col pb-[7rem]">{children}</main>
       <Nav />
     </div>
   );
