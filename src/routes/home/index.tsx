@@ -4,6 +4,7 @@ import ScheduleBanner from '@features/home/components/schedule-banner/ScheduleBa
 import ShortcutCards from '@features/home/components/shortcut-cards/ShortcutCards';
 import Recommendation from '@features/home/components/recommendation/Recommendation';
 import RecentPosts from '@features/home/components/recent-posts/RecentPosts';
+import HomeFab from '@features/home/components/home-fab/HomeFab';
 
 export const Route = createFileRoute('/home/')({
   component: Home,
@@ -27,6 +28,8 @@ function Home() {
           <RecentPosts />
         </section>
       </div>
+
+      <HomeFab to="/post/new" bottom={96} right={24} />
     </div>
   );
 }
