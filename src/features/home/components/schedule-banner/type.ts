@@ -3,8 +3,10 @@ export type BannerType = 'shopping' | 'sharing';
 
 export interface ScheduleBannerProps {
   type: BannerType;
-  title: string;
-  subtitle: string;
-  ctaLabel: string;
+  title?: string;
+  subtitle?: string;
+  ctaLabel?: string;
+  leftImage?: string;     
+  bigImage?: string;      
   onCtaClick?: () => void;
 }

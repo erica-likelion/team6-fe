@@ -10,4 +10,5 @@ export interface FabButtonProps {
   onClick?: () => void;
   className?: string;
   'aria-label'?: string;                   // 접근성 라벨(없으면 label 사용)
+  iconPosition?: 'left' | 'right'; // 아이콘 위치, 기본은 'left'
 }

@@ -1,7 +1,16 @@
 import { Icon } from '@components/Icon';
+import { useEffect } from 'react';
 
-export const Reciept = () => {
-  const ISAUTH = false;
+export const Reciept = ({
+  setTotal,
+  isAuth,
+}: {
+  setTotal: React.Dispatch<React.SetStateAction<number>>;
+  isAuth: boolean;
+}) => {
+  useEffect(() => {
+    setTotal(1000);
+  }, [setTotal]);
   return (
     <div className="flex flex-col gap-[1.5rem]">
       <button className="label-small flex w-fit items-center justify-center gap-[0.38rem] rounded-[1.13rem] border-1 border-gray-200 bg-white p-[1rem] font-bold text-gray-600">
@@ -9,7 +18,7 @@ export const Reciept = () => {
       </button>
       <div className="border-primary-bg flex flex-col gap-[1.62rem] border-t-4 border-b-4 border-dashed bg-white px-[1rem] py-[2.25rem]">
         <span className="label-large text-empahsis-green font-semibold">
-          {ISAUTH ? '영수증' : '먼저 영수증 인증을 마쳐주세요!'}
+          {isAuth ? '영수증' : '먼저 영수증 인증을 마쳐주세요!'}
         </span>
         <div className="border-t-[0.125rem] border-dashed border-black" />
         <div className="label-small grid-1fr grid gap-y-[0.88rem] font-semibold">
