@@ -1,13 +1,14 @@
 // features/post/components/Post.tsx
 import { Header } from '@components/Header/Header';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useSearch } from '@tanstack/react-router';
+import { useNavigate, useSearch } from '@tanstack/react-router';
 
 import { PartyBoard } from '@features/post/components/PartyBoard';
 import { ItemBoard } from '@features/post/components/ItemBoard';
 
 import { createParty, type CreatePartyInput } from '@services/post/party/supabase';
 import { createItem, type CreateItemInput } from '@services/post/item/supabase';
+import { toast } from 'react-toastify';
 
 type CommonValues = {
   title: string;
@@ -39,7 +40,7 @@ export const Post = () => {
   // /post?type=party | /post?type=item
   const { type } = useSearch({ from: '/post/write/' }) as { type?: 'party' | 'item' };
   const isParty = (type ?? 'party') === 'party';
-
+  const navigate = useNavigate();
   const methods = useForm<FormValues>({
     mode: 'onChange',
     defaultValues: (isParty
@@ -69,8 +70,6 @@ export const Post = () => {
   const {
     handleSubmit,
     formState: { isSubmitting, isValid },
-    reset,
-    getValues,
   } = methods;
 
   const onSubmit = async (values: FormValues) => {
@@ -113,16 +112,8 @@ export const Post = () => {
         } satisfies CreateItemInput);
       }
 
-      alert('게시글이 등록되었습니다!');
-      reset({
-        ...getValues(),
-        title: '',
-        content: '',
-        photos: undefined,
-        ...(values.type === 'party' ? { eventTime: '', itemCodes: [] } : { price: 0, receipts: undefined }),
-        agreement1: false,
-        agreement2: false,
-      } as FormValues);
+      navigate({ to: '/home' });
+      toast('게시글이 정상적으로 업로드됐어요');
     } catch (e) {
       const message = e instanceof Error ? e.message : typeof e === 'string' ? e : '등록 중 오류가 발생했습니다.';
       alert(message);
@@ -130,7 +121,7 @@ export const Post = () => {
   };
 
   return (
-    <div className="bg-primary-bg relative flex min-h-dvh w-dvw flex-col">
+    <div className="bg-primary-bg absolute z-51 flex h-dvh w-dvw flex-col overflow-y-scroll">
       <div className="bg-primary-bg sticky top-0 z-20">
         <Header title={`게시글 작성하기`} isMenu={false} />
       </div>
