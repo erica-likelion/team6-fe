@@ -83,12 +83,12 @@ export default function ScheduleBanner({
       <section className="px-5 pt-2">
         <div className="mx-auto flex max-w-[420px] flex-col items-center">
           {/* 카드 위 전용 영역: 큰 3D 그래픽 */}
-          <div className="flex w-full items-end justify-center" style={{ height: `${bigHeight}px` }}>
+          <div className="relative flex w-full items-end justify-center" style={{ height: `${bigHeight}px` }}>
             <img
               src={resolvedBigImage}
               alt=""
               style={{ width: `${bigWidth}px`, height: `${bigHeight}px` }}
-              className="pointer-events-none object-contain select-none"
+              className="pointer-events-none absolute bottom-[-2rem] object-contain select-none"
               draggable={false}
             />
           </div>
