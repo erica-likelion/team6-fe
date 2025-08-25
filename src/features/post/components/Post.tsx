@@ -8,6 +8,7 @@ import { ItemBoard } from '@features/post/components/ItemBoard';
 
 import { createParty, type CreatePartyInput } from '@services/post/party/supabase';
 import { createItem, type CreateItemInput } from '@services/post/item/supabase';
+import { toast } from 'react-toastify';
 
 type CommonValues = {
   title: string;
@@ -112,6 +113,7 @@ export const Post = () => {
       }
 
       navigate({ to: '/home' });
+      toast('게시글이 정상적으로 업로드됐어요');
     } catch (e) {
       const message = e instanceof Error ? e.message : typeof e === 'string' ? e : '등록 중 오류가 발생했습니다.';
       alert(message);
