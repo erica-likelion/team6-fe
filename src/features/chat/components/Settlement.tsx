@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from '@tanstack/react-router';
 import { createSettlement, getSettlementByRoom } from '@services/chat/supabase';
 import supabase from '@utils/supabase/supabaseClient';
+import { toast } from 'react-toastify';
 
 interface SettlementProps {
   title: string;
@@ -38,8 +39,8 @@ export const Settlement = ({ title }: SettlementProps) => {
     const payerId = members[0]?.user_id;
     if (payerId === me) {
       // 내가 요청자라면 settlement 화면을 못 보도록 뒤로 이동
-      navigate({ to: '/chat/$id', params: { id: roomId! } });
-      alert('이미 요청하신 내용이에요!');
+      navigate({ to: '/chat/$id', params: { id: roomId! }, replace: true });
+      toast('이미 요청하신 정산이 있어요!');
     }
   }, [me, members, roomId, navigate]);
   // 정산 멤버 불러오기
