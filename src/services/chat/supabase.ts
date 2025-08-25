@@ -1,6 +1,33 @@
 import supabase from '@utils/supabase/supabaseClient';
 
-export async function getMyChatRooms() {
+export type ChatMessage = {
+  content: string | null;
+  created_at: string;
+};
+
+export type Photo = {
+  url: string;
+};
+
+export type Post = {
+  title: string;
+  party_photos?: Photo[];
+  item_photos?: Photo[];
+};
+
+export type ChatRoom = {
+  id: string;
+  post_id: string;
+  created_at: string;
+  posts?: Post | null;
+  chat_messages?: ChatMessage[];
+};
+
+export type ChatMemberRoom = {
+  room_id: string;
+  chat_rooms: ChatRoom;
+};
+export async function getMyChatRooms(): Promise<ChatMemberRoom[]> {
   const {
     data: { user },
     error: userErr,
@@ -17,9 +44,9 @@ export async function getMyChatRooms() {
         post_id,
         created_at,
         posts ( 
-            title,
-            party_photos ( url ),
-            item_photos ( url )
+          title,
+          party_photos ( url ),
+          item_photos ( url )
         ),         
         chat_messages ( content, created_at )
       )
@@ -30,7 +57,7 @@ export async function getMyChatRooms() {
     .limit(1, { foreignTable: 'chat_rooms.chat_messages' });
 
   if (error) throw error;
-  return data ?? [];
+  return (data ?? []) as unknown as ChatMemberRoom[];
 }
 
 type RoomResp = {
