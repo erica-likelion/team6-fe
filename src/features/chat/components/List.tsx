@@ -11,8 +11,9 @@ export const List = () => {
   if (isLoading) return <div className="p-4 text-gray-400">불러오는 중…</div>;
   if (isError) return <div className="p-4 text-red-500">목록을 불러오지 못했습니다.</div>;
   if (!data?.length) return <EmptyListItem />;
+  console.log(data);
   return (
-    <ul className="flex flex-1 flex-col items-stretch gap-[1.5rem] overflow-auto px-[1rem] py-[1.25rem]">
+    <ul className="flex flex-1 flex-col items-stretch gap-[1.5rem] px-[1rem] py-[1.25rem]">
       {data.map((row) => {
         const img = row.chat_rooms.posts.item_photos[0] || row.chat_rooms.posts?.party_photos[0];
         return (
@@ -30,11 +31,11 @@ export const List = () => {
               <div className="flex min-w-0 flex-1 flex-col gap-[0.38rem]">
                 <span className="label-medium-600 truncate">{row.chat_rooms.posts.title}</span>
                 <span className="paragraph-small truncate text-gray-400">
-                  {row.chat_rooms.chat_messages[0] ?? '대화를 시작해보세요!'}
+                  {row.chat_rooms.chat_messages[0].content}
                 </span>
               </div>
               <div className="bg-primary-green label-xsmall-600 flex h-[1.5rem] w-[1.5rem] items-center justify-center rounded-[0.75rem] text-white">
-                1
+                0
               </div>
             </Link>
           </li>

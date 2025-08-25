@@ -16,7 +16,7 @@ export const Nav = memo(function Nav() {
   );
 
   return (
-    <nav className="fixed bottom-0 left-0 z-50 h-[6.875rem] w-full border-t border-gray-100 bg-[#FAF9F4] px-[1rem]">
+    <nav className="h-[6.875rem] w-full border-t border-gray-100 bg-[#FAF9F4] px-[1rem]">
       <ul className="flex h-full items-center justify-between">
         {items.map((it) => (
           <Li key={it.to} {...it} isActive={pathname === it.to} />

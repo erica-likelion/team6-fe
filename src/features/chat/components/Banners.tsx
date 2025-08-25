@@ -1,34 +1,91 @@
 import { Icon } from '@components/Icon';
+import { useChatRoom } from '@features/chat/api/useChatRoom';
+import { useParams } from '@tanstack/react-router';
 
 export const Banners = () => {};
 
 const Information = () => {
-  return (
-    <div className="flex w-full flex-col gap-[1rem] rounded-[1.5rem] bg-white p-[1rem]">
-      <div className="flex items-center gap-[0.5rem]">
-        <div className="relative flex h-[1.5rem] w-[4.5rem]">
-          <div className="absolute left-0 h-[1.5rem] w-[1.5rem] rounded-[1.125rem] border-1 border-gray-200 bg-white" />
-          <div className="absolute left-[1rem] h-[1.5rem] w-[1.5rem] rounded-[1.125rem] border-1 border-gray-200 bg-white" />
-          <div className="absolute left-[2rem] h-[1.5rem] w-[1.5rem] rounded-[1.125rem] border-1 border-gray-200 bg-white" />
-          <div className="absolute left-[3rem] h-[1.5rem] w-[1.5rem] rounded-[1.125rem] border-1 border-gray-200 bg-white" />
-        </div>
-        <span className="label-small font-semibold text-gray-400">4/4</span>
+  const { id: roomId } = useParams({ from: '/chat/$id/' });
+  const { data, isLoading, isError } = useChatRoom(roomId);
+  if (isLoading) {
+    return (
+      <div className="flex w-full items-center justify-center rounded-[1.5rem] bg-white p-[1rem] text-gray-400">
+        불러오는 중…
       </div>
+    );
+  }
+
+  if (isError || !data) {
+    return (
+      <div className="flex w-full items-center justify-center rounded-[1.5rem] bg-white p-[1rem] text-red-500">
+        정보를 불러오지 못했습니다.
+      </div>
+    );
+  }
+
+  // getChatRoomById 반환 예:
+  // {
+  //   id, title, memberCount,
+  //   members: [{ userId, username, avatarUrl }],
+  //   messages: [...],
+  //   detail?: { location?: string, event_time?: string, type?: 'PARTY'|'ITEM' }
+  // }
+  const title = data.title ?? '제목 없음';
+  const memberCount = data.memberCount ?? 0;
+
+  // 타입/세부정보(파티라면 party_details에서 위치/시간 조인해왔다고 가정)
+  const typeText = data.type === 'ITEM' ? '소분' : '장보기';
+  const location = data.location ?? '장소 미정';
+  const eventTimeISO = data.eventTime;
+  const timeLabel = eventTimeISO
+    ? new Date(eventTimeISO).toLocaleString(undefined, { weekday: 'short', hour: '2-digit', minute: '2-digit' })
+    : '시간 미정';
+
+  // (선택) 아바타 4개까지 겹치기
+  const avatars = (data.members ?? []).slice(0, 4);
+  return (
+    <div className="flex w-full flex-col gap-[1rem] rounded-[1.5rem] bg-white p-[1rem] shadow-[0_2px_10px_rgba(0,0,0,0.08)]">
+      {/* 멤버 아바타 + 카운트 */}
+      <div className="flex items-center gap-[0.5rem]">
+        <div className={`relative flex h-[1.5rem] w-[${avatars.length * 1.5}rem]`}>
+          {avatars.map((m, idx) => (
+            <div
+              key={m.userId}
+              className="absolute h-[1.5rem] w-[1.5rem] overflow-hidden rounded-[1.125rem] border border-gray-200 bg-white"
+              style={{ left: `${idx * 1.0}rem` }}
+              title={m.username ?? '참여자'}
+            >
+              {m.avatarUrl ? (
+                <img src={m.avatarUrl} alt="" className="h-full w-full object-cover" />
+              ) : (
+                <div className="flex h-full w-full items-center justify-center bg-gray-100 text-[0.6rem] text-gray-500">
+                  {m.username?.[0] ?? ''}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+        <span className="label-small font-semibold text-gray-400">{memberCount}/4</span>
+        {/* 최대 인원 표시가 필요하다면 data.detail?.max_members로 대체 */}
+      </div>
+
+      {/* 제목/태그/장소/시간 */}
       <div className="flex flex-col gap-[0.5rem]">
         <div className="flex items-center justify-between">
-          <span className="label-medium font-bold text-gray-800">홈플러스 장보러 같이 가요</span>
-          <span className="label-xxsmall rounded-[0.5rem] bg-gray-50 p-[0.38rem] font-semibold text-gray-600">
-            장보기
+          <span className="label-medium font-bold text-gray-800">{title}</span>
+          <span className="label-xxsmall rounded-[0.5rem] bg-gray-50 px-[0.5rem] py-[0.38rem] font-semibold text-gray-600">
+            {typeText}
           </span>
         </div>
+
         <div className="flex flex-1 justify-between gap-[0.56rem]">
-          <div className="flex flex-1 items-center gap-[0.38rem]">
-            <Icon icon="map-marker_fill" className="text-gray-400" width={'1.125rem'} height={'1.125rem'} />
-            <span className="label-xsmall text-gray-400">홈플러스 안양</span>
+          <div className="flex min-w-0 flex-1 items-center gap-[0.38rem]">
+            <Icon icon="map-marker_fill" className="shrink-0 text-gray-400" width="1.125rem" height="1.125rem" />
+            <span className="label-xsmall truncate text-gray-400">{location}</span>
           </div>
-          <div className="flex flex-1 items-center gap-[0.38rem]">
-            <Icon icon="clock_fill" className="text-gray-400" width={'1.125rem'} height={'1.125rem'} />
-            <span className="label-xsmall text-gray-400">수요일 12시</span>
+          <div className="flex min-w-0 flex-1 items-center gap-[0.38rem]">
+            <Icon icon="clock_fill" className="shrink-0 text-gray-400" width="1.125rem" height="1.125rem" />
+            <span className="label-xsmall truncate text-gray-400">{timeLabel}</span>
           </div>
         </div>
       </div>
@@ -47,7 +104,7 @@ const Promise = () => {
         <Icon icon="chevron" className="rotate-180 text-gray-400" width={'1.5rem'} height={'1.5rem'} />
       </div>
       <span className="label-xsmall font-medium text-gray-500">
-        멋사자님이 약속을 잡으셨어요. 약속 내용을 확인해보세요.
+        사용자님이 약속을 잡으셨어요. 약속 내용을 확인해보세요.
       </span>
     </div>
   );
