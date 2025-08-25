@@ -1,5 +1,6 @@
 import GROCERY from '@assets/images/1080_Grocery.webp';
 import INGREDIENTS from '@assets/images/1080_Ingredients.webp';
+import { Header } from '@components/Header/Header';
 import { useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
 
@@ -12,10 +13,11 @@ export const Select = () => {
   };
 
   return (
-    <div className="flex h-dvh flex-1 flex-col justify-between px-[1rem] pt-[3.25rem]">
-      <span className="label-large font-bold">어떤 게시글을 작성할까요?</span>
+    <div className="bg-primary-bg absolute z-51 flex h-dvh w-full flex-1 flex-col justify-between pt-[3.25rem]">
+      <Header title="게시글 작성하기" />
+      <span className="label-large px-[1rem] font-bold">어떤 게시글을 작성할까요?</span>
 
-      <div className="flex flex-1 items-center">
+      <div className="flex flex-1 items-center px-[1rem]">
         <div className="flex w-full gap-[0.56rem]">
           {/* 소분 모임 (party) */}
           <button
@@ -55,7 +57,7 @@ export const Select = () => {
         </div>
       </div>
 
-      <div className="mb-[1rem]">
+      <div className="mx-[1rem] mb-[1rem]">
         <button
           type="button"
           onClick={() => go(type)}
