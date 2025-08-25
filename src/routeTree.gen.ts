@@ -16,6 +16,7 @@ import { Route as ListIndexRouteImport } from './routes/list/index'
 import { Route as HomeIndexRouteImport } from './routes/home/index'
 import { Route as ChatIndexRouteImport } from './routes/chat/index'
 import { Route as GroupListTypeRouteImport } from './routes/group-list/$type'
+import { Route as ArticleIdRouteImport } from './routes/article/$id'
 import { Route as PostWriteIndexRouteImport } from './routes/post/write/index'
 import { Route as ChatIdIndexRouteImport } from './routes/chat/$id/index'
 import { Route as ChatIdSettlementIndexRouteImport } from './routes/chat/$id/settlement/index'
@@ -55,6 +56,11 @@ const GroupListTypeRoute = GroupListTypeRouteImport.update({
   path: '/group-list/$type',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ArticleIdRoute = ArticleIdRouteImport.update({
+  id: '/article/$id',
+  path: '/article/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PostWriteIndexRoute = PostWriteIndexRouteImport.update({
   id: '/post/write/',
   path: '/post/write/',
@@ -73,6 +79,7 @@ const ChatIdSettlementIndexRoute = ChatIdSettlementIndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/article/$id': typeof ArticleIdRoute
   '/group-list/$type': typeof GroupListTypeRoute
   '/chat': typeof ChatIndexRoute
   '/home': typeof HomeIndexRoute
@@ -85,6 +92,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/article/$id': typeof ArticleIdRoute
   '/group-list/$type': typeof GroupListTypeRoute
   '/chat': typeof ChatIndexRoute
   '/home': typeof HomeIndexRoute
@@ -98,6 +106,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/article/$id': typeof ArticleIdRoute
   '/group-list/$type': typeof GroupListTypeRoute
   '/chat/': typeof ChatIndexRoute
   '/home/': typeof HomeIndexRoute
@@ -112,6 +121,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/article/$id'
     | '/group-list/$type'
     | '/chat'
     | '/home'
@@ -124,6 +134,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/article/$id'
     | '/group-list/$type'
     | '/chat'
     | '/home'
@@ -136,6 +147,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/article/$id'
     | '/group-list/$type'
     | '/chat/'
     | '/home/'
@@ -149,6 +161,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ArticleIdRoute: typeof ArticleIdRoute
   GroupListTypeRoute: typeof GroupListTypeRoute
   ChatIndexRoute: typeof ChatIndexRoute
   HomeIndexRoute: typeof HomeIndexRoute
@@ -211,6 +224,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GroupListTypeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/article/$id': {
+      id: '/article/$id'
+      path: '/article/$id'
+      fullPath: '/article/$id'
+      preLoaderRoute: typeof ArticleIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/post/write/': {
       id: '/post/write/'
       path: '/post/write'
@@ -237,6 +257,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ArticleIdRoute: ArticleIdRoute,
   GroupListTypeRoute: GroupListTypeRoute,
   ChatIndexRoute: ChatIndexRoute,
   HomeIndexRoute: HomeIndexRoute,

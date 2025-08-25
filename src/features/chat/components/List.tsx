@@ -31,7 +31,7 @@ export const List = () => {
               <div className="flex min-w-0 flex-1 flex-col gap-[0.38rem]">
                 <span className="label-medium-600 truncate">{row.chat_rooms.posts.title}</span>
                 <span className="paragraph-small truncate text-gray-400">
-                  {row.chat_rooms.chat_messages[0].content}
+                  {row.chat_rooms.chat_messages[0]?.content ?? '채팅 시작하기'}
                 </span>
               </div>
               <div className="bg-primary-green label-xsmall-600 flex h-[1.5rem] w-[1.5rem] items-center justify-center rounded-[0.75rem] text-white">

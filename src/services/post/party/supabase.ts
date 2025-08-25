@@ -88,6 +88,28 @@ export async function createParty(input: {
     .eq('id', postId)
     .single();
   if (selErr || !full) throw selErr ?? new Error('결과 조회 실패');
-
+  await supabase.rpc('create_party_for_post', { p_post_id: postId, p_quota: 4 });
   return full; // full.chat_rooms[0].id 등으로 채팅방 접근
+}
+
+export type JoinPartyResult = {
+  joined: boolean;
+  current_count: number;
+  quota: number;
+  room_id: string;
+};
+
+export async function joinPartyByPostId(postId: string): Promise<JoinPartyResult> {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error('로그인이 필요합니다.');
+
+  const { data, error } = await supabase.rpc('join_party_by_post_id', { p_post_id: postId });
+  if (error) {
+    if ((error as any).code === 'P0002') throw new Error('정원이 가득 찼습니다.');
+    if ((error as any).code === 'P0001') throw new Error('해당 글에 파티가 없습니다.');
+    throw error;
+  }
+  return data?.[0] as JoinPartyResult;
 }
