@@ -3,32 +3,37 @@ import RecentPosts from '@features/home/components/recent-posts/RecentPosts';
 import SubPageNavBar from './SubPageNavBar';
 import FilterBar from './FilterBar';
 
-import type { RecommendCard } from '@features/home/components/recommendation/type';
-import type { PostItem } from '@features/home/components/recent-posts/type';
+
+import { useGroupPosts } from '@hooks/useGroupPosts';
+import type { GroupPostType, GroupPostStatus } from '@services/group-post/list';
 
 interface GroupListPageProps {
   title: string;
-  recommendItems: RecommendCard[];
-  posts?: PostItem[]; // ← optional
+  fixedType: GroupPostType; // 'shopping' | 'sharing'
 }
 
-export default function GroupListPage({
-  title,
-  recommendItems,
-  posts = [], // ← 기본값으로 빈 배열
-}: GroupListPageProps) {
+export default function GroupListPage({ title, fixedType }: GroupListPageProps) {
+  const { items, loading, error, setFilter } = useGroupPosts(
+    { size: 20, type: fixedType },
+    { locked: { type: fixedType } }
+  );
+
   return (
     <div className="min-h-screen w-full bg-[#FAF9F4]">
       <div className="mx-auto max-w-[420px] pb-[76px]">
         <SubPageNavBar title={title} />
+
         <section className="mt-2 px-5">
-          <Recommendation items={recommendItems} />
+          <Recommendation useRemote type={fixedType} />
+        </section>
+
+        <section className="mt-4 px-5">
+          <FilterBar onChange={(f: { type?: GroupPostType; status?: GroupPostStatus }) => setFilter(f)} />
         </section>
         <section className="mt-4 px-5">
-          <FilterBar />
-        </section>
-        <section className="mt-4 px-5">
-          <RecentPosts items={posts} />
+          {loading && <div>불러오는 중…</div>}
+          {error && <div>{error}</div>}
+          {!loading && !error && <RecentPosts items={items} />}
         </section>
       </div>
     </div>

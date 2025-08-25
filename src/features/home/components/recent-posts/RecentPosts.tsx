@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import type { RecentPostsProps, PostItem, PostBadge } from './type';
-//import { useHomeStore } from '../../stores/useHomeStore';
 import { formatDayTime } from '../../utils/formatDate';
 import { Icon } from '@components/Icon';
 import type { IconProps } from '@components/Icon/type';
@@ -10,12 +9,10 @@ import { Link } from '@tanstack/react-router';
 // Badge: 유사도 = 초록 pill, 장보기 = 텍스트
 function Badge({ text, tone = 'green' }: PostBadge) {
   if (tone === 'text') {
-    // 장보기 (피그마 스펙 반영)
     return <span className="text-[10px] leading-[12px] font-semibold tracking-[-0.02em] text-gray-600">{text}</span>;
   }
 
   if (tone === 'green') {
-    // 유사도 (Primary Green)
     return (
       <span className="inline-flex h-[24px] items-center rounded-[8px] bg-[#4DDB6D] px-[6px] text-[12px] font-semibold text-white">
         {text}
@@ -95,6 +92,7 @@ function Row({ item, onClick }: { item: PostItem; onClick?: (i: PostItem) => voi
     </button>
   );
 }
+
 export default function RecentPosts({ items, className = '', onClickRow }: RecentPostsProps) {
   const [list, setList] = useState<PostItem[]>(items ?? []);
   const [loading, setLoading] = useState(false);
@@ -117,6 +115,7 @@ export default function RecentPosts({ items, className = '', onClickRow }: Recen
     })();
   }, [items]);
 
+
   return (
     <section className={`rounded-[20px] bg-[#FAF9F4] ${className}`}>
       <div className="px-4 py-3">
@@ -124,10 +123,10 @@ export default function RecentPosts({ items, className = '', onClickRow }: Recen
       </div>
 
       <div className="divide-y divide-gray-200">
-        {loading ? (
-          <div className="px-4 py-8 text-center text-sm text-gray-400">불러오는 중…</div>
-        ) : list.length > 0 ? (
-          list.map((p) => <Row key={p.id} item={p} onClick={onClickRow} />)
+
+        {items?.length ? (
+          items.map((p) => <Row key={p.id} item={p} onClick={onClickRow} />)
+
         ) : (
           <div className="px-4 py-8 text-center text-sm text-gray-400">표시할 게시글이 없습니다</div>
         )}
