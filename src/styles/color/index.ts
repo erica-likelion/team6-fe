@@ -11,8 +11,11 @@ export const grayColorMap = {
   'gray-50': '#F7F6F1',
 };
 
-export const primaryColorMap = {
+export const ColorMap = {
+  red: '#FF5145',
   'primary-green': '#4DDB6D',
+  'secondary-green': '#B5EAA7',
+  'tertiary-green': '#E4F1DB',
   'primary-bg': '#F7F6F1',
   'empahsis-green': '#1EB065'
 };
@@ -23,7 +26,7 @@ export const whiteColorMap = { white: '#ffffff' };
 
 export const colorMap = {
   ...grayColorMap,
-  ...primaryColorMap,
+  ...ColorMap,
   ...whiteColorMap,
   ...blackColorMap,
 };

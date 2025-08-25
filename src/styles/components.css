@@ -64,6 +64,10 @@
     .label-xsmall-500 {
       @apply font-suit text-black text-[0.75rem] leading-[1rem] tracking-[-0.015rem] font-medium;
     }
+
+    .label-xxsmall {
+      @apply font-suit text-black text-[0.625rem] leading-[0.75rem] tracking-[-0.0125rem];
+    }
   
     /* Paragraph */
     .paragraph-large {

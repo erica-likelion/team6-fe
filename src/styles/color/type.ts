@@ -1,7 +1,7 @@
-import { grayColorMap, primaryColorMap, whiteColorMap, blackColorMap } from './';
+import { grayColorMap, colorMap, whiteColorMap, blackColorMap } from './';
 
 export type ColorType =
   | keyof typeof grayColorMap
-  | keyof typeof primaryColorMap
+  | keyof typeof colorMap
   | keyof typeof whiteColorMap
   | keyof typeof blackColorMap;

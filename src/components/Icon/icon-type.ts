@@ -14,6 +14,7 @@ export type iconTypes =
   | 'calendar_fill'
   | 'camera'
   | 'camera_fill'
+  | 'check'
   | 'checkbox-list'
   | 'chevron'
   | 'clock-plus'

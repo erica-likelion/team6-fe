@@ -11,10 +11,14 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as UserIndexRouteImport } from './routes/user/index'
+import { Route as PostIndexRouteImport } from './routes/post/index'
 import { Route as ListIndexRouteImport } from './routes/list/index'
 import { Route as HomeIndexRouteImport } from './routes/home/index'
 import { Route as ChatIndexRouteImport } from './routes/chat/index'
 import { Route as GroupListTypeRouteImport } from './routes/group-list/$type'
+import { Route as PostWriteIndexRouteImport } from './routes/post/write/index'
+import { Route as ChatIdIndexRouteImport } from './routes/chat/$id/index'
+import { Route as ChatIdSettlementIndexRouteImport } from './routes/chat/$id/settlement/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -24,6 +28,11 @@ const IndexRoute = IndexRouteImport.update({
 const UserIndexRoute = UserIndexRouteImport.update({
   id: '/user/',
   path: '/user/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PostIndexRoute = PostIndexRouteImport.update({
+  id: '/post/',
+  path: '/post/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ListIndexRoute = ListIndexRouteImport.update({
@@ -46,6 +55,21 @@ const GroupListTypeRoute = GroupListTypeRouteImport.update({
   path: '/group-list/$type',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PostWriteIndexRoute = PostWriteIndexRouteImport.update({
+  id: '/post/write/',
+  path: '/post/write/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChatIdIndexRoute = ChatIdIndexRouteImport.update({
+  id: '/chat/$id/',
+  path: '/chat/$id/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChatIdSettlementIndexRoute = ChatIdSettlementIndexRouteImport.update({
+  id: '/chat/$id/settlement/',
+  path: '/chat/$id/settlement/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -53,7 +77,11 @@ export interface FileRoutesByFullPath {
   '/chat': typeof ChatIndexRoute
   '/home': typeof HomeIndexRoute
   '/list': typeof ListIndexRoute
+  '/post': typeof PostIndexRoute
   '/user': typeof UserIndexRoute
+  '/chat/$id': typeof ChatIdIndexRoute
+  '/post/write': typeof PostWriteIndexRoute
+  '/chat/$id/settlement': typeof ChatIdSettlementIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -61,7 +89,11 @@ export interface FileRoutesByTo {
   '/chat': typeof ChatIndexRoute
   '/home': typeof HomeIndexRoute
   '/list': typeof ListIndexRoute
+  '/post': typeof PostIndexRoute
   '/user': typeof UserIndexRoute
+  '/chat/$id': typeof ChatIdIndexRoute
+  '/post/write': typeof PostWriteIndexRoute
+  '/chat/$id/settlement': typeof ChatIdSettlementIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -70,13 +102,37 @@ export interface FileRoutesById {
   '/chat/': typeof ChatIndexRoute
   '/home/': typeof HomeIndexRoute
   '/list/': typeof ListIndexRoute
+  '/post/': typeof PostIndexRoute
   '/user/': typeof UserIndexRoute
+  '/chat/$id/': typeof ChatIdIndexRoute
+  '/post/write/': typeof PostWriteIndexRoute
+  '/chat/$id/settlement/': typeof ChatIdSettlementIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/group-list/$type' | '/chat' | '/home' | '/list' | '/user'
+  fullPaths:
+    | '/'
+    | '/group-list/$type'
+    | '/chat'
+    | '/home'
+    | '/list'
+    | '/post'
+    | '/user'
+    | '/chat/$id'
+    | '/post/write'
+    | '/chat/$id/settlement'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/group-list/$type' | '/chat' | '/home' | '/list' | '/user'
+  to:
+    | '/'
+    | '/group-list/$type'
+    | '/chat'
+    | '/home'
+    | '/list'
+    | '/post'
+    | '/user'
+    | '/chat/$id'
+    | '/post/write'
+    | '/chat/$id/settlement'
   id:
     | '__root__'
     | '/'
@@ -84,7 +140,11 @@ export interface FileRouteTypes {
     | '/chat/'
     | '/home/'
     | '/list/'
+    | '/post/'
     | '/user/'
+    | '/chat/$id/'
+    | '/post/write/'
+    | '/chat/$id/settlement/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -93,7 +153,11 @@ export interface RootRouteChildren {
   ChatIndexRoute: typeof ChatIndexRoute
   HomeIndexRoute: typeof HomeIndexRoute
   ListIndexRoute: typeof ListIndexRoute
+  PostIndexRoute: typeof PostIndexRoute
   UserIndexRoute: typeof UserIndexRoute
+  ChatIdIndexRoute: typeof ChatIdIndexRoute
+  PostWriteIndexRoute: typeof PostWriteIndexRoute
+  ChatIdSettlementIndexRoute: typeof ChatIdSettlementIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -110,6 +174,13 @@ declare module '@tanstack/react-router' {
       path: '/user'
       fullPath: '/user'
       preLoaderRoute: typeof UserIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/post/': {
+      id: '/post/'
+      path: '/post'
+      fullPath: '/post'
+      preLoaderRoute: typeof PostIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/list/': {
@@ -140,6 +211,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GroupListTypeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/post/write/': {
+      id: '/post/write/'
+      path: '/post/write'
+      fullPath: '/post/write'
+      preLoaderRoute: typeof PostWriteIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/chat/$id/': {
+      id: '/chat/$id/'
+      path: '/chat/$id'
+      fullPath: '/chat/$id'
+      preLoaderRoute: typeof ChatIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/chat/$id/settlement/': {
+      id: '/chat/$id/settlement/'
+      path: '/chat/$id/settlement'
+      fullPath: '/chat/$id/settlement'
+      preLoaderRoute: typeof ChatIdSettlementIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -149,7 +241,11 @@ const rootRouteChildren: RootRouteChildren = {
   ChatIndexRoute: ChatIndexRoute,
   HomeIndexRoute: HomeIndexRoute,
   ListIndexRoute: ListIndexRoute,
+  PostIndexRoute: PostIndexRoute,
   UserIndexRoute: UserIndexRoute,
+  ChatIdIndexRoute: ChatIdIndexRoute,
+  PostWriteIndexRoute: PostWriteIndexRoute,
+  ChatIdSettlementIndexRoute: ChatIdSettlementIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
