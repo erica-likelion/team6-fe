@@ -5,7 +5,6 @@ import ShortcutCards from '@features/home/components/shortcut-cards/ShortcutCard
 import Recommendation from '@features/home/components/recommendation/Recommendation';
 import RecentPosts from '@features/home/components/recent-posts/RecentPosts';
 import { FloatingButton } from '@features/post/components/FloatingButton';
-
 export const Route = createFileRoute('/home/')({
   component: Home,
 });
@@ -14,10 +13,7 @@ function Home() {
   return (
     <div className="bg-primary-bg min-h-screen w-full">
       <div className="mx-auto max-w-[420px] pb-[76px]">
-        {/* ✅ 배너 전체는 ScheduleBanner에서 관리 */}
-        <ScheduleBanner />
-
-        {/* ✅ 아래는 아이보리 배경 */}
+        <ScheduleBanner type="shopping" />
         <section className="mt-4 px-5">
           <ShortcutCards />
         </section>
@@ -32,3 +28,5 @@ function Home() {
     </div>
   );
 }
+
+export default Home;
