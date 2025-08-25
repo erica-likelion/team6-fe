@@ -14,10 +14,7 @@ function Home() {
   return (
     <div className="min-h-screen w-full bg-[#FAF9F4]">
       <div className="mx-auto max-w-[420px] pb-[76px]">
-        {/* ✅ 배너 전체는 ScheduleBanner에서 관리 */}
-        <ScheduleBanner />
-
-        {/* ✅ 아래는 아이보리 배경 */}
+        <ScheduleBanner type="shopping" />
         <section className="mt-4 px-5">
           <ShortcutCards />
         </section>
@@ -28,8 +25,9 @@ function Home() {
           <RecentPosts />
         </section>
       </div>
-
       <HomeFab to="/post/new" bottom={96} right={24} />
     </div>
   );
 }
+
+export default Home;
