@@ -1,0 +1,84 @@
+@layer components {
+    /* Header */
+    .header-large {
+      @apply font-suit text-black font-bold text-[2rem] leading-[2.5rem] tracking-[-0.04rem];
+    }
+  
+    .header-medium {
+      @apply font-suit text-black font-bold text-[1.75rem] leading-[2.25rem] tracking-[-0.035rem];
+    }
+  
+    .header-small {
+      @apply font-suit text-black font-bold text-[1.5rem] leading-[2rem] tracking-[-0.03rem];
+    }
+  
+    .header-xsmall {
+      @apply font-suit text-black font-bold text-[1.25rem] leading-[1.75rem] tracking-[-0.025rem];
+    }
+  
+    /* Label */
+    .label-large {
+      @apply font-suit text-black text-[1.125rem] leading-[1.5rem] tracking-[-0.0225rem];
+    }
+  
+    .label-large-600 {
+      @apply font-suit text-black text-[1.125rem] leading-[1.5rem] tracking-[-0.0225rem] font-semibold;
+    }
+  
+    .label-large-500 {
+      @apply font-suit text-black text-[1.125rem] leading-[1.5rem] tracking-[-0.0225rem] font-medium;
+    }
+  
+    .label-medium {
+      @apply font-suit text-black text-[1rem] leading-[1.25rem] tracking-[-0.02rem];
+    }
+  
+    .label-medium-600 {
+      @apply font-suit text-black text-[1rem] leading-[1.25rem] tracking-[-0.02rem] font-semibold;
+    }
+  
+    .label-medium-500 {
+      @apply font-suit text-black text-[1rem] leading-[1.25rem] tracking-[-0.02rem] font-medium;
+    }
+  
+    .label-small {
+      @apply font-suit text-black text-[0.875rem] leading-[1rem] tracking-[-0.0175rem];
+    }
+  
+    .label-small-600 {
+      @apply font-suit text-black text-[0.875rem] leading-[1rem] tracking-[-0.0175rem] font-semibold;
+    }
+  
+    .label-small-500 {
+      @apply font-suit text-black text-[0.875rem] leading-[1rem] tracking-[-0.0175rem] font-medium;
+    }
+  
+    .label-xsmall {
+      @apply font-suit text-black text-[0.75rem] leading-[1rem] tracking-[-0.015rem];
+    }
+  
+    .label-xsmall-600 {
+      @apply font-suit text-black text-[0.75rem] leading-[1rem] tracking-[-0.015rem] font-semibold;
+    }
+  
+    .label-xsmall-500 {
+      @apply font-suit text-black text-[0.75rem] leading-[1rem] tracking-[-0.015rem] font-medium;
+    }
+
+    .label-xxsmall {
+      @apply font-suit text-black text-[0.625rem] leading-[0.75rem] tracking-[-0.0125rem];
+    }
+  
+    /* Paragraph */
+    .paragraph-large {
+      @apply font-suit text-black font-regular text-[1.125rem] leading-[1.75rem] tracking-[-0.0225rem];
+    }
+  
+    .paragraph-medium {
+      @apply font-suit text-black font-regular text-[1rem] leading-[1.5rem] tracking-[-0.02rem];
+    }
+  
+    .paragraph-small {
+      @apply font-suit text-black font-regular text-[0.875rem] leading-[1.25rem] tracking-[-0.0175rem];
+    }
+  }

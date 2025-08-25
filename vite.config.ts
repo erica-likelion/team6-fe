@@ -2,12 +2,21 @@ import { VitePWA } from 'vite-plugin-pwa';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import tailwindcss from '@tailwindcss/vite';
+import { tanstackRouter } from '@tanstack/router-plugin/vite';
+import svgr from 'vite-plugin-svgr';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    react(),
     tsconfigPaths(),
+    tanstackRouter({
+      target: 'react',
+      autoCodeSplitting: true,
+    }),
+    tailwindcss(),
+    react(),
+    svgr(),
     VitePWA({
       registerType: 'prompt',
       injectRegister: false,
@@ -16,7 +25,9 @@ export default defineConfig({
         name: 'team6-fe',
         short_name: 'team6-fe',
         description: 'team6-fe',
-        theme_color: '#ffffff',
+        theme_color: '#F7F6F1',
+        display: 'standalone', // 주소줄 제거
+        orientation: 'portrait', // 세로 고정
 
         icons: [
           {

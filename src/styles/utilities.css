@@ -1,0 +1,8 @@
+@layer utilities {
+  [data-status='active'] {
+    @apply !text-black;
+  }
+  [data-status='active'] > span {
+    @apply !font-bold !text-black;
+  } /* nav active color */
+}
