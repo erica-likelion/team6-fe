@@ -1,4 +1,3 @@
-// lib/party.ts
 import supabase from '@utils/supabase/supabaseClient';
 export type CreatePartyInput = {
   title: string;
@@ -33,80 +32,62 @@ export async function uploadPartyPhotos(files: File[], postId: string) {
   return uploadedUrls;
 }
 
-export async function createParty(input: CreatePartyInput) {
-  // 1) 로그인 사용자 확인
-  const {
-    data: { user },
-    error: userErr,
-  } = await supabase.auth.getUser();
-  if (userErr || !user) throw new Error('로그인이 필요합니다.');
-
-  // 2) posts 삽입 (type='PARTY')
-  const { data: post, error: postErr } = await supabase
-    .from('posts')
-    .insert([
-      {
-        user_id: user.id,
-        type: 'PARTY',
-        title: input.title,
-        content: input.content ?? null,
-      },
-    ])
-    .select('*')
-    .single();
-
-  if (postErr || !post) throw postErr ?? new Error('posts insert 실패');
-
-  try {
-    // 3) party_details 삽입
-    const { error: detErr } = await supabase.from('party_details').insert([
-      {
-        post_id: post.id,
-        location: input.location,
-        event_time: input.eventTime,
-        max_members: input.maxMembers,
-      },
-    ]);
-    if (detErr) throw detErr;
-
-    // 4) party_items 삽입 (선택한 코드들)
-    if (input.itemCodes?.length) {
-      const rows = input.itemCodes.map((code) => ({
-        post_id: post.id,
-        code,
-      }));
-      const { error: itemsErr } = await supabase.from('party_items').insert(rows);
-      if (itemsErr) throw itemsErr;
+export async function createParty(input: {
+  title: string;
+  content?: string;
+  location: string;
+  eventTime: string;
+  maxMembers: number;
+  itemCodes: string[];
+  photos?: File[];
+}) {
+  // 로그인 보장
+  const { data: ses } = await supabase.auth.getSession();
+  if (!ses?.session?.user) {
+    class NeedLoginError extends Error {
+      code: string;
+      constructor() {
+        super('NEED_LOGIN');
+        this.code = 'NEED_LOGIN';
+      }
     }
-
-    // 5) 사진 업로드 + party_photos 삽입 (최대 10장)
-    if (input.photos?.length) {
-      const urls = await uploadPartyPhotos(input.photos, post.id);
-      const rows = urls.map((url) => ({ post_id: post.id, url }));
-      const { error: photosErr } = await supabase.from('party_photos').insert(rows);
-      if (photosErr) throw photosErr;
-    }
-
-    // 6) 결과 조회 (조인)
-    const { data: full, error: fullErr } = await supabase
-      .from('posts')
-      .select(
-        `
-        *,
-        party_details (*),
-        party_items (code),
-        party_photos (url)
-      `
-      )
-      .eq('id', post.id)
-      .single();
-
-    if (fullErr || !full) throw fullErr ?? new Error('결과 조회 실패');
-
-    return full;
-  } catch (e) {
-    // 실패 시 최소한 posts 삭제로 롤백 흉내 (완전 트랜잭션은 RPC에서 처리 권장)
-    await supabase.from('posts').delete().eq('id', post.id);
-    throw e;
+    throw new NeedLoginError();
   }
+
+  // 1) 트랜잭션 RPC
+  const { data: postId, error: rpcErr } = await supabase.rpc('create_party_with_chat', {
+    p_title: input.title,
+    p_content: input.content ?? null,
+    p_location: input.location,
+    p_event_time: input.eventTime, // ISO string 허용됨
+    p_max_members: input.maxMembers,
+    p_item_codes: input.itemCodes,
+  });
+  if (rpcErr || !postId) throw rpcErr ?? new Error('파티 생성 실패');
+
+  // 2) 사진 업로드 + DB 반영(트랜잭션 밖)
+  if (input.photos?.length) {
+    const urls = await uploadPartyPhotos(input.photos, postId);
+    const rows = urls.map((url) => ({ post_id: postId, url }));
+    const { error: phErr } = await supabase.from('party_photos').insert(rows);
+    if (phErr) throw phErr;
+  }
+
+  // 3) 필요 시 조인 조회(채팅방 id 포함)
+  const { data: full, error: selErr } = await supabase
+    .from('posts')
+    .select(
+      `
+      *,
+      party_details (*),
+      party_items (code),
+      party_photos (url),
+      chat_rooms (*)
+    `
+    )
+    .eq('id', postId)
+    .single();
+  if (selErr || !full) throw selErr ?? new Error('결과 조회 실패');
+
+  return full; // full.chat_rooms[0].id 등으로 채팅방 접근
 }
