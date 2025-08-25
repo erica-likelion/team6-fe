@@ -50,16 +50,16 @@ const Information = () => {
         <div className={`relative flex h-[1.5rem] w-[${avatars.length * 1.5}rem]`}>
           {avatars.map((m, idx) => (
             <div
-              key={m.userId}
+              key={m.user_id}
               className="absolute h-[1.5rem] w-[1.5rem] overflow-hidden rounded-[1.125rem] border border-gray-200 bg-white"
               style={{ left: `${idx * 1.0}rem` }}
               title={m.username ?? '참여자'}
             >
-              {m.avatarUrl ? (
-                <img src={m.avatarUrl} alt="" className="h-full w-full object-cover" />
+              {m.userinfo?.avatarUrl ? (
+                <img src={m.userinfo.avatarUrl ?? ''} alt="" className="h-full w-full object-cover" />
               ) : (
                 <div className="flex h-full w-full items-center justify-center bg-gray-100 text-[0.6rem] text-gray-500">
-                  {m.username?.[0] ?? ''}
+                  {m.userinfo?.username?.[0] ?? ''}
                 </div>
               )}
             </div>

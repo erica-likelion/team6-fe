@@ -43,7 +43,10 @@ type RoomResp = {
     party_details?: any | any[] // 1:1이면 객체, 1:N이면 배열
     item_details?: any | any[]
   }
-  chat_members: Array<{ user_id: string; userinfo?: { username?: string | null } | null }>
+  chat_members: Array<{
+    username: string; user_id: string; userinfo?: {
+    avatarUrl: string | undefined; username?: string | null 
+} | null }>
   chat_messages: Array<{
     id: string
     user_id: string

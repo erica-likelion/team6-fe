@@ -1,49 +1,55 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useParams, useNavigate } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
-import { fetchPostById, type PostItem } from '@services/post/supabase';
+import {
+  fetchAuthorByPostId,
+  fetchDetailByType,
+  fetchPostById,
+  PostDetail,
+  type PostItem,
+} from '@services/post/supabase';
 import { joinPartyByPostId } from '@services/post/party/supabase';
 import { toast } from 'react-toastify';
+import { Header } from '@components/Header/Header';
+import { Icon } from '@components/Icon';
+import Test from '@assets/images/test.png';
 /**
  * ArticleDetail
  * - Screenshot-inspired detail screen for a group shopping/errand post
  * - Tech: React + TailwindCSS + lucide-react icons
  * - Drop into your app and pass props; sane defaults supplied for quick preview
  */
-export default function ArticleDetail(props: Partial<ArticleDetailProps>) {
-  const {
-    images = defaultData.images,
-    author = defaultData.author,
-    title = defaultData.title,
-    trust = defaultData.trust,
-    tags = defaultData.tags,
-    location = defaultData.location,
-    time = defaultData.time,
-    quota = defaultData.quota,
-    ctaText = defaultData.ctaText,
-  } = props;
-
+export default function ArticleDetail() {
   const navigate = useNavigate(); // ⬅️ 네비게이터
-
-  const [index, setIndex] = useState(0);
   const { id } = useParams({ from: '/article/$id' });
-  const [list, setList] = useState<PostItem>();
+  const [list, setList] = useState<PostItem | null>();
+  const [detail, setDetail] = useState<PostDetail | null>();
+  const [author, setAuthor] = useState('');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     (async () => {
       try {
         setLoading(true);
-        const res = await fetchPostById(id);
-        console.log(res);
-        setList(res);
-      } catch (e) {
-        console.error(e);
+        const p = await fetchPostById(id);
+        setList(p);
+        console.log(p);
+        if (p) {
+          const d = await fetchDetailByType(p);
+
+          const author = await fetchAuthorByPostId(id);
+          console.log(author);
+          if (author) {
+            setAuthor(author.username);
+          }
+          setDetail(d);
+        }
       } finally {
         setLoading(false);
       }
     })();
   }, [id]);
+
   console.log(loading);
   const handleApply = async () => {
     if (!list?.id) return;
@@ -60,96 +66,47 @@ export default function ArticleDetail(props: Partial<ArticleDetailProps>) {
   };
 
   return (
-    <div className="min-h-dvh bg-white text-gray-900">
-      {/* Image gallery */}
-      <div className="relative aspect-[9/4] w-full overflow-hidden bg-gray-100">
-        {images?.length ? (
-          <img src={images[index]} alt={title} className="h-full w-full object-cover" />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center text-gray-400"></div>
-        )}
-
-        {/* Dots */}
-        {images && images.length > 1 && (
-          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-black/40 px-2 py-1 backdrop-blur">
-            <div className="flex items-center gap-1.5">
-              {images.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setIndex(i)}
-                  className={`h-1.5 rounded-full transition-all ${i === index ? 'w-4 bg-white' : 'w-1.5 bg-white/60'}`}
-                  aria-label={`image ${i + 1}`}
-                />
-              ))}
+    <div className="bg-primary-bg absolute z-51 h-dvh w-dvw">
+      <Header title="게시물" />
+      <div className="flex h-dvh flex-col gap-[1.5rem] px-[1rem] pt-[3.25rem]">
+        <img src={Test} alt="" className="h-[23rem] w-full" />
+        <div className="flex items-center gap-[0.75rem]">
+          <div className="h-[2.25rem] w-[2.25rem] rounded-[1.125rem] border-1 border-gray-200"></div>
+          <div className="flex flex-col gap-[0.38rem]">
+            <span className="label-medium">{author}</span>
+            <div className="flex gap-[0.33rem]">
+              <span className="label-xxsmall rounded-[0.5rem] bg-amber-300 p-[0.38rem] text-white">냉동고 부자</span>
+              <span className="label-xxsmall rounded-[0.5rem] bg-pink-400 p-[0.38rem] text-white">멋사</span>
+              <span className="label-xxsmall rounded-[0.5rem] bg-amber-950 p-[0.38rem] text-white">최고</span>
             </div>
           </div>
-        )}
-      </div>
-
-      <div className="mx-auto w-full max-w-md px-4 pt-4 pb-28">
-        {/* Author + badges row */}
-        <div className="mb-4 flex items-center gap-3">
-          <div className="h-10 w-10 shrink-0 rounded-2xl border border-gray-200 bg-white" />
-          <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-2">
-              <span className="truncate text-sm font-semibold text-gray-900">{author.name}</span>
-            </div>
-            <div className="mt-1 flex items-center gap-1 text-[11px] text-gray-500">
-              <span className="font-semibold text-emerald-600">{trust.score}</span>
-              <span className="text-gray-400">/</span>
-              <span>5</span>
-            </div>
-          </div>
-
-          {/* Small status chips */}
-          <div className="flex shrink-0 items-center gap-1.5">
-            {tags.slice(0, 3).map((t) => (
-              <span
-                key={t.label}
-                className={`rounded-full px-2 py-0.5 text-[10px] font-semibold whitespace-nowrap ${t.color}`}
-              >
-                {t.label}
-              </span>
-            ))}
+        </div>
+        <div className="flex items-center gap-[0.5rem]">
+          <span className="label-small font-semibold text-gray-500">신뢰도</span>
+          <div className="flex items-center gap-[0.25rem]">
+            <Icon icon="star_fill" width={'0.9rem'} height={'0.9rem'} className="text-primary-green" />
+            <span>4 / 5</span>
           </div>
         </div>
-
-        {/* Title */}
-        <h1 className="mb-2 text-[18px] leading-snug font-extrabold">{list?.title}</h1>
-
-        {/* Meta row */}
-        <div className="mb-3 flex flex-wrap items-center gap-3 text-[12px] text-gray-600">
-          <span className="inline-flex items-center gap-1">홈플러스 안양</span>
-          <span className="inline-flex items-center gap-1">{time}</span>
-          <span className="inline-flex items-center gap-1">{quota}</span>
-        </div>
-
-        {/* Body */}
-        <p className="text-[13px] leading-6 whitespace-pre-line text-gray-700">{list?.body}</p>
-
-        {/* Location & misc */}
-        <div className="mt-5 grid grid-cols-1 gap-2 text-[12px] text-gray-600 sm:grid-cols-2">
-          <div className="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-3 py-2">
-            <span>{location}</span>
+        <div className="flex items-center justify-end gap-[0.56rem] text-gray-400">
+          <div className="flex items-center gap-[0.38rem]">
+            <Icon icon="map-marker-area_fill" />
+            <span className="label-xsmall text-gray-400">{detail?.location}</span>
           </div>
-          <div className="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-3 py-2">
-            <span>공동구매 · 육류</span>
+          <div className="flex items-center gap-[0.38rem]">
+            <Icon icon="users_fill" />
+            <span className="label-xsmall text-gray-400">1/4</span>
           </div>
         </div>
-      </div>
-
-      {/* Sticky CTA */}
-      <div className="fixed inset-x-0 bottom-0 z-10 border-t border-gray-200 bg-white/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-white/70">
-        <div className="mx-auto flex w-full max-w-md items-center justify-between gap-3">
-          <div className="text-[12px] text-gray-500">
-            <div className="flex items-center gap-1 text-gray-600">오늘 14시</div>
-            <div className="flex items-center gap-1">1/4</div>
-          </div>
+        <span className="header-small">{list?.title}</span>
+        <span className="paragraph-medium font-regular">{list?.body}</span>
+        <div className="flex p-[1rem]">
+          <div className="basis-1/2"></div>
           <button
+            className="bg-primary-green label-small basis-1/2 rounded-[1.125rem] p-[1rem] text-white"
             onClick={handleApply}
-            className="bg-primary-green h-12 flex-1 rounded-2xl px-5 text-sm font-bold text-white shadow-sm transition active:translate-y-[1px]"
           >
-            {ctaText}
+            신청하기
           </button>
         </div>
       </div>
@@ -170,25 +127,4 @@ export type ArticleDetailProps = {
   quota: string; // e.g., '1/4'
   ctaText: string;
   onApply?: () => void;
-};
-
-const defaultData: ArticleDetailProps = {
-  images: [
-    'https://images.unsplash.com/photo-1610741083757-1ae88e1f9b19?q=80&w=2070&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1560780552-ba54683cb428?q=80&w=2070&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1604908176997-cb9369c919f0?q=80&w=2070&auto=format&fit=crop',
-  ],
-  author: { name: '멋사자', isPlus: true, isSafe: true },
-  title: '코스트코에서 장보기 [금정동]',
-  body: '코스트코에서 장 같이 보고 고기 육류 살 사람 구해요. 이러저러한 사람 금지 어쩌구 저쩌구 금지 사바사 사절\n\n2시간 정도 장볼 거 같아요\n제발 자잘 같이 장보러 가요 굴림~\n장보고 장보고',
-  trust: { score: 4 },
-  tags: [
-    { label: '냉장고 무지', color: 'bg-rose-100 text-rose-700' },
-    { label: '동 한 덩도 나눠요', color: 'bg-emerald-100 text-emerald-700' },
-    { label: '신뢰해요 이인로', color: 'bg-sky-100 text-sky-700' },
-  ],
-  location: '금정동',
-  time: '오늘 14시',
-  quota: '1/4',
-  ctaText: '신청하기',
 };

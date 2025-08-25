@@ -14,6 +14,7 @@ export type iconTypes =
   | 'calendar_fill'
   | 'camera'
   | 'camera_fill'
+  | 'check-line'
   | 'check'
   | 'checkbox-list'
   | 'chevron'
@@ -45,10 +46,12 @@ export type iconTypes =
   | 'heart_fill'
   | 'home'
   | 'home_fill'
+  | 'icon_group'
   | 'image-plus'
   | 'image-plus_fill'
   | 'image'
   | 'image_fill'
+  | 'logo'
   | 'map-marker-area'
   | 'map-marker-area_fill'
   | 'map-marker-plus'
@@ -80,5 +83,4 @@ export type iconTypes =
   | 'user'
   | 'user_fill'
   | 'users'
-  | 'users_fill'
-  | 'check-line';
+  | 'users_fill';

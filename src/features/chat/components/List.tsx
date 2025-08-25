@@ -15,7 +15,8 @@ export const List = () => {
   return (
     <ul className="flex flex-1 flex-col items-stretch gap-[1.5rem] px-[1rem] py-[1.25rem]">
       {data.map((row) => {
-        const img = row.chat_rooms.posts.item_photos[0] || row.chat_rooms.posts?.party_photos[0];
+        const post = row.chat_rooms[0]?.posts[0];
+        const img = post?.item_photos?.[0] || post?.party_photos?.[0];
         return (
           <li key={row.room_id}>
             <Link to="/chat/$id" params={{ id: row.room_id }} className="flex items-center gap-[0.625rem]">
@@ -29,9 +30,9 @@ export const List = () => {
                 )}
               </div>
               <div className="flex min-w-0 flex-1 flex-col gap-[0.38rem]">
-                <span className="label-medium-600 truncate">{row.chat_rooms.posts.title}</span>
+                <span className="label-medium-600 truncate">{row.chat_rooms[0]?.posts[0]?.title ?? '제목'}</span>
                 <span className="paragraph-small truncate text-gray-400">
-                  {row.chat_rooms.chat_messages[0]?.content ?? '채팅 시작하기'}
+                  {row.chat_rooms[0]?.chat_messages[0]?.content ?? '채팅 시작하기'}
                 </span>
               </div>
               <div className="bg-primary-green label-xsmall-600 flex h-[1.5rem] w-[1.5rem] items-center justify-center rounded-[0.75rem] text-white">
