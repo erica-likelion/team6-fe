@@ -1,9 +1,14 @@
 // src/features/group-list/components/FilterBar.tsx
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import SplitMenu from '@components/Button/menu-button/MenuButton';
 import { Icon } from '@components/Icon';
+import type { GroupPostType, GroupPostStatus } from '@services/group-post/list';
 
-export default function FilterBar() {
+interface FilterBarProps {
+  onChange?: (f: { type?: GroupPostType; status?: GroupPostStatus }) => void;
+}
+
+export default function FilterBar({ onChange }: FilterBarProps) {
   const [openDay, setOpenDay] = useState(false);
   const [openSort, setOpenSort] = useState(false);
 
@@ -12,6 +17,14 @@ export default function FilterBar() {
 
   const [onlyVerified, setOnlyVerified] = useState(false);
   const [deadlineSoon, setDeadlineSoon] = useState(false);
+
+  // ✅ 상태가 변할 때마다 onChange 호출
+  useEffect(() => {
+    onChange?.({
+      type: undefined, // 요일 → type 매핑 필요하면 여기에 연결
+      status: deadlineSoon ? 'open' : undefined,
+    });
+  }, [selectedDay, selectedSort, onlyVerified, deadlineSoon, onChange]);
 
   return (
     <div className="scrollbar-hide flex flex-nowrap gap-2 overflow-x-auto">
@@ -78,7 +91,7 @@ export default function FilterBar() {
             },
           },
         ]}
-        className="shrink-0" // ✅ 버튼 줄어들지 않도록
+        className="shrink-0"
       />
 
       {/* 정렬 선택 */}
@@ -112,7 +125,7 @@ export default function FilterBar() {
             },
           },
         ]}
-        className="shrink-0" // ✅ 버튼 줄어들지 않도록
+        className="shrink-0"
       />
 
       {/* 인증된 사용자 */}
