@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import type { RecentPostsProps, PostItem, PostBadge } from './type';
 import { formatDayTime } from '../../utils/formatDate';
 import { Icon } from '@components/Icon';
 import type { IconProps } from '@components/Icon/type';
+import { fetchRecentPosts } from '@services/post/supabase';
+import { Link } from '@tanstack/react-router';
 
 // Badge: 유사도 = 초록 pill, 장보기 = 텍스트
 function Badge({ text, tone = 'green' }: PostBadge) {
@@ -68,9 +70,14 @@ function Row({ item, onClick }: { item: PostItem; onClick?: (i: PostItem) => voi
 
   if (href) {
     return (
-      <a href={href} aria-label={title} className="block">
-        {content}
-      </a>
+      <Link
+        to="/article/$id"
+        params={{ id: String(href) }} // 반드시 객체로 넘기기
+        aria-label={title}
+        className="block"
+      >
+        {content} {/* 앞서 content → body로 매핑했으니 body 사용 */}
+      </Link>
     );
   }
 
@@ -86,7 +93,29 @@ function Row({ item, onClick }: { item: PostItem; onClick?: (i: PostItem) => voi
   );
 }
 
-export default function RecentPosts({ items = [], className = '', onClickRow }: RecentPostsProps) {
+export default function RecentPosts({ items, className = '', onClickRow }: RecentPostsProps) {
+  const [list, setList] = useState<PostItem[]>(items ?? []);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (items) {
+      setList(items);
+      return;
+    }
+    (async () => {
+      try {
+        setLoading(true);
+        const res = await fetchRecentPosts(20);
+        setList(res);
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [items]);
+
+
   return (
     <section className={`rounded-[20px] bg-[#FAF9F4] ${className}`}>
       <div className="px-4 py-3">
@@ -94,8 +123,10 @@ export default function RecentPosts({ items = [], className = '', onClickRow }: 
       </div>
 
       <div className="divide-y divide-gray-200">
+
         {items?.length ? (
           items.map((p) => <Row key={p.id} item={p} onClick={onClickRow} />)
+
         ) : (
           <div className="px-4 py-8 text-center text-sm text-gray-400">표시할 게시글이 없습니다</div>
         )}
