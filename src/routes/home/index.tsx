@@ -4,6 +4,7 @@ import ScheduleBanner from '@features/home/components/schedule-banner/ScheduleBa
 import ShortcutCards from '@features/home/components/shortcut-cards/ShortcutCards';
 import Recommendation from '@features/home/components/recommendation/Recommendation';
 import RecentPosts from '@features/home/components/recent-posts/RecentPosts';
+import { FloatingButton } from '@features/post/components/FloatingButton';
 
 export const Route = createFileRoute('/home/')({
   component: Home,
@@ -11,7 +12,7 @@ export const Route = createFileRoute('/home/')({
 
 function Home() {
   return (
-    <div className="min-h-screen w-full bg-[#FAF9F4]">
+    <div className="bg-primary-bg min-h-screen w-full">
       <div className="mx-auto max-w-[420px] pb-[76px]">
         {/* ✅ 배너 전체는 ScheduleBanner에서 관리 */}
         <ScheduleBanner />
@@ -27,6 +28,7 @@ function Home() {
           <RecentPosts />
         </section>
       </div>
+      <FloatingButton />
     </div>
   );
 }
